@@ -13,7 +13,7 @@
                 Text="Login Page"
                 VerticalOptions="CenterAndExpand" />
             <Entry
-                x:Name="txtUsername"
+                x:Name="txtEmail"
                 Margin="0,10,0,0"
                 Placeholder="Username" />
             <Entry
@@ -22,19 +22,24 @@
                 IsPassword="True"
                 Placeholder="Password" />
 
-            <StackLayout Margin="0,10,0,0" Orientation="Horizontal">
+            <HorizontalStackLayout Margin="0,10,0,0" RadioButtonGroup.GroupName="AccountType">
                 <RadioButton
-                    x:Name="rdoParticipant"
+                    CheckedChanged="OnClickUpdateType"
                     Content="Participant"
                     IsChecked="True"
-                    VerticalOptions="Center" />
+                    Value="Participant" />
                 <RadioButton
-                    x:Name="rdoOrganizer"
+                    CheckedChanged="OnClickUpdateType"
                     Content="Organizer"
-                    VerticalOptions="Center" />
-            </StackLayout>
+                    Value="Organizer" />
 
-            <Button Margin="0,20,0,0" Text="Login" />
+
+            </HorizontalStackLayout>
+
+            <Button
+                Margin="0,20,0,0"
+                Clicked="OnClickLogin"
+                Text="Login" />
         </VerticalStackLayout>
 
     </VerticalStackLayout>

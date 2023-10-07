@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WitTicket.View.DashboardOrganizer"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="">
+    <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+
+        <VerticalStackLayout BackgroundColor="LightGrey" WidthRequest="250">
+            <VerticalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+                <Label FontSize="Medium" Text="{Binding FirstName}" />
+                <Label FontSize="Micro" Text="Event Organizer" />
+                <Label
+                    Margin="0,0,0,20"
+                    FontSize="Medium"
+                    Text="Dashboard" />
+            </VerticalStackLayout>
+
+            <Button Text="Events" />
+            <Button Text="Insights" />
+            <Button Text="Settings" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Padding="0" WidthRequest="1300">
+            <FlexLayout Margin="50,10" JustifyContent="SpaceBetween">
+                <Label FontSize="Header" Text="Events" />
+                <HorizontalStackLayout>
+                    <ImageButton
+                        Margin="0,0,0,0"
+                        HeightRequest="16"
+                        Source="home_icon.png"
+                        WidthRequest="16" />
+                    <ImageButton
+                        Margin="0,0,0,0"
+                        HeightRequest="16"
+                        Source="home_icon.png"
+                        WidthRequest="16" />
+                    <ImageButton
+                        Margin="0,0,0,0"
+                        HeightRequest="16"
+                        Source="home_icon.png"
+                        WidthRequest="16" />
+                </HorizontalStackLayout>
+            </FlexLayout>
+            <Grid
+                x:Name="tblContactList"
+                Padding="60"
+                ColumnSpacing="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="21" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition x:Name="colId" />
+                    <ColumnDefinition x:Name="colLastName" />
+                    <ColumnDefinition x:Name="colFirstName" />
+                    <ColumnDefinition x:Name="colSchool" />
+                    <ColumnDefinition x:Name="colCourse" />
+                    <ColumnDefinition x:Name="colEmail" />
+                    <ColumnDefinition x:Name="colContact" />
+                    <ColumnDefinition x:Name="colType" />
+                </Grid.ColumnDefinitions>
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Text="ID" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Text="Last Name" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Text="First Name" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Text="School" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="4"
+                    Text="Course" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="5"
+                    Text="Email" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="6"
+                    Text="Contact" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="7"
+                    Text="Type" />
+            </Grid>
+        </VerticalStackLayout>
+    </FlexLayout>
+
+</ContentPage>

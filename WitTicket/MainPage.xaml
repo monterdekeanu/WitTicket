@@ -23,7 +23,7 @@
                 <Label
                     FontAttributes="Bold"
                     FontSize="Header"
-                    Text="WitTicker" />
+                    Text="WitTicket" />
                 <HorizontalStackLayout Padding="0,0,30,0">
                     <Button
                         BackgroundColor="Transparent"

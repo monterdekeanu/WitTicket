@@ -22,6 +22,7 @@
         HorizontalOptions="Center"
         VerticalOptions="Center">
         <ImageButton
+            Margin="0,0,0,-55"
             Clicked="OnClickHomeIcon"
             HorizontalOptions="End"
             Source="home_icon.png"
@@ -37,9 +38,17 @@
             Text="Sign Up" />
         <Label FontSize="Micro" Text="Account Type" />
 
-        <HorizontalStackLayout RadioButtonGroup.GroupName="accoutnType">
-            <RadioButton Content="Organizer" Value="Organizer" />
-            <RadioButton Content="Participant" Value="Participant" />
+        <HorizontalStackLayout RadioButtonGroup.GroupName="accountType">
+            <RadioButton
+                CheckedChanged="OnClickUpdateAcountType"
+                Content="Participant"
+                IsChecked="True"
+                Value="Participant" />
+            <RadioButton
+                CheckedChanged="OnClickUpdateAcountType"
+                Content="Organizer"
+                Value="Organizer" />
+
         </HorizontalStackLayout>
         <HorizontalStackLayout>
 
@@ -53,7 +62,7 @@
                 <Entry x:Name="txtLastName" Placeholder="Hawking" />
                 <Label FontSize="Micro" Text="Birth Date" />
                 <DatePicker
-                    x:Name="dateBirthdate"
+                    x:Name="dpDateBirthdate"
                     ToolTipProperties.Text="Optional"
                     WidthRequest="254" />
             </VerticalStackLayout>
@@ -100,6 +109,7 @@
         <Button
             x:Name="btnRegister"
             Margin="0,20,0,0"
+            Clicked="OnClickRegister"
             Text="Register" />
     </VerticalStackLayout>
 </ContentPage>
