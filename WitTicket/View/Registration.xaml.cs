@@ -22,20 +22,25 @@ public partial class Registration : ContentPage
         
     }
 
-	private void OnClickRegister(object sender, EventArgs e)
+	private async void OnClickRegister(object sender, EventArgs e)
 	{
         if (string.IsNullOrEmpty(txtEmail.Text) || string.IsNullOrEmpty(txtPassword.Text) || string.IsNullOrEmpty(txtConfirmPassword.Text) || string.IsNullOrEmpty(txtFirstName.Text) || string.IsNullOrEmpty(txtLastName.Text))
         {
-            DisplayAlert("Error", "Please fill in all the fields", "OK");
+            await DisplayAlert("Error", "Please fill in all the fields", "OK");
         }
         else
         { 
             if (txtPassword.Text != txtConfirmPassword.Text)
             {
-                DisplayAlert("Error", "Passwords do not match", "OK");
+                await DisplayAlert("Error", "Passwords do not match", "OK");
             }
             else
             {
+                bool confirmAge = await DisplayAlert("Confirm Your Age", "Are you sure you are " + CalculateExactAge(DateOnly.FromDateTime(dpDateBirthdate.Date)) + " years old?", "Yes", "No");
+                if(!confirmAge)
+                {
+                    return;
+                }
                 user.Email = txtEmail.Text;
                 user.Password = txtPassword.Text;
                 user.FirstName = txtFirstName.Text;
@@ -46,7 +51,7 @@ public partial class Registration : ContentPage
                 {
                     if (user.Email == txtEmail.Text)
                     {
-                        DisplayAlert("Error", "Email is already taken", "OK");
+                        await DisplayAlert("Error", "Email is already taken", "OK");
                         return;
                     }
                 }
@@ -60,14 +65,30 @@ public partial class Registration : ContentPage
                 }
                 users.Add(user);
                 (new Services.Connection()).SaveUsersList(users);
-                DisplayAlert("Success", "Account created successfully", "OK");  
-                Shell.Current.GoToAsync("//MainPage");
+                await DisplayAlert("Success", "Account created successfully", "OK");
+                await Shell.Current.GoToAsync("//MainPage");
             }
         }
     }
+
     private void OnClickUpdateAcountType(object sender, EventArgs e)
     {
         user.AccountType = (string)((RadioButton)sender).Value;
     }
+    private int CalculateExactAge(DateOnly birthdate)
+    {
+        // Get the current date
+        DateOnly currentDate = DateOnly.FromDateTime(DateTime.Now);
 
+        // Calculate the age
+        int age = currentDate.Year - birthdate.Year;
+
+        // Check if the birthday has occurred this year
+        if (birthdate.Month > currentDate.Month || (birthdate.Month == currentDate.Month && birthdate.Day > currentDate.Day))
+        {
+            age--;
+        }
+
+        return age;
+    }
 }

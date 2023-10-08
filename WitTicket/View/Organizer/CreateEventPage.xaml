@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WitTicket.View.Organizer.CreateEventPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title=""
+    BackgroundImageSource="background_stadium.png">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    <ScrollView HorizontalOptions="FillAndExpand">
+        <ScrollView.Resources>
+            <Style TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="Editor">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="DatePicker">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+            <Style TargetType="TimePicker">
+                <Setter Property="BackgroundColor" Value="White" />
+            </Style>
+        </ScrollView.Resources>
+        <HorizontalStackLayout
+            Padding="20"
+            Background="#ecf0f1"
+            HorizontalOptions="Center">
+            <VerticalStackLayout
+                Margin="0,0,0,0"
+                HorizontalOptions="Start"
+                WidthRequest="700">
+
+                <Label
+                    Margin="0,10,0,20"
+                    FontAttributes="Bold"
+                    FontSize="Title"
+                    HorizontalOptions="Start"
+                    Text="Event Details" />
+
+                <Entry x:Name="eventNameEntry" Placeholder="Event Name" />
+                <Editor
+                    x:Name="txtDescription"
+                    HeightRequest="250"
+                    Placeholder="Event Description" />
+                <Label
+                    Margin="0,0,0,20"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Media" />
+                <FlexLayout
+                    x:Name="imageStackLayout"
+                    MaximumWidthRequest="620"
+                    Wrap="Wrap">
+                    <Image
+                        Aspect="Fill"
+                        HeightRequest="200"
+                        HorizontalOptions="Start"
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        Source="no_image.png"
+                        WidthRequest="200" />
+                    <Image
+                        Aspect="Fill"
+                        HeightRequest="200"
+                        HorizontalOptions="Start"
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        Source="no_image.png"
+                        WidthRequest="200" />
+                    <Image
+                        Aspect="Fill"
+                        HeightRequest="200"
+                        HorizontalOptions="Start"
+                        MaximumHeightRequest="200"
+                        MaximumWidthRequest="200"
+                        Source="no_image.png"
+                        WidthRequest="200" />
+                </FlexLayout>
+
+                <Button
+                    Margin="0,50,0,0"
+                    Clicked="OnClickUploadImage"
+                    Text="Upload Image"
+                    WidthRequest="254" />
+
+                <StackLayout />
+            </VerticalStackLayout>
+            <VerticalStackLayout Margin="40,0,0,0" HorizontalOptions="Start">
+                <HorizontalStackLayout HorizontalOptions="End">
+                    <Button
+                        Clicked="OnClickClosePopup"
+                        HeightRequest="16"
+                        Text="X"
+                        WidthRequest="16" />
+                </HorizontalStackLayout>
+                <Label
+                    Margin="0,0,0,10"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Pricing and Capacity" />
+
+                <FlexLayout JustifyContent="Start">
+                    <Entry
+                        x:Name="priceEntry"
+                        HorizontalOptions="FillAndExpand"
+                        Placeholder="$ 0.00"
+                        WidthRequest="128" />
+                    <Entry
+                        x:Name="capacityEntry"
+                        Margin="10,0,0,0"
+                        Placeholder="Total Capacity"
+                        WidthRequest="128" />
+                </FlexLayout>
+                <Label
+                    Margin="0,20,0,10"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Address" />
+                <VerticalStackLayout HorizontalOptions="Start">
+                    <Entry
+                        x:Name="cityEntry"
+                        Placeholder="City"
+                        WidthRequest="300" />
+                    <Entry
+                        x:Name="Street"
+                        Placeholder="Street"
+                        WidthRequest="300" />
+                </VerticalStackLayout>
+                <Label
+                    Margin="0,20,0,10"
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    Text="Schedule" />
+                <VerticalStackLayout>
+                    <Label Text="Start Event" />
+                    <HorizontalStackLayout>
+                        <DatePicker x:Name="startDatePicker" VerticalOptions="Fill" />
+                        <TimePicker x:Name="startTimePicker" FontSize="28" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+                <VerticalStackLayout>
+                    <Label Text="End Event" />
+                    <HorizontalStackLayout>
+                        <DatePicker x:Name="endDatePicker" VerticalOptions="Fill" />
+                        <TimePicker x:Name="endTimePicker" FontSize="28" />
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+
+                <Button
+                    Margin="0,20,0,0"
+                    Clicked="OnClickAddEvent"
+                    HorizontalOptions="Center"
+                    Text="Add Event" />
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+    </ScrollView>
+</ContentPage>

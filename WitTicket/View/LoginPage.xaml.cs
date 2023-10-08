@@ -25,7 +25,16 @@ public partial class LoginPage : ContentPage
 				if ((user.Email.ToLower() == txtEmail.Text.ToLower()) && (user.Password == txtPassword.Text) && (user.AccountType == tmpUser.AccountType))
 				{
 					await DisplayAlert("Success", "Login successful", "OK");
-					await Navigation.PushAsync(new DashboardOrganizer(user));
+					if(tmpUser.AccountType=="Participant")
+					{
+						await DisplayAlert("Success", "Login successful || No User UI yet || Try Organizer :(", "OK");
+                        //await Navigation.PushAsync(new DashboardParticipant(user));
+                    }
+                    else if(tmpUser.AccountType=="Organizer")
+					{
+                        await Navigation.PushAsync(new DashboardOrganizer(user));
+                    }
+                    
 					return;
 				}
 			}

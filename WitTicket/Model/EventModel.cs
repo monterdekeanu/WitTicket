@@ -2,11 +2,11 @@ namespace WitTicket.Model;
 
 public class EventModel
 {
-
         public int EventId { get; set; }           // Unique identifier for the event
         public string Name { get; set; }           // Event name
         public string City { get; set; }           // City where the event is held
-        public DateTime StartDate { get; set; }    // Date and time when the event starts
+    public string Street { get; set; }
+    public DateTime StartDate { get; set; }    // Date and time when the event starts
         public DateTime EndDate { get; set; }      // Date and time when the event ends
         public decimal Price { get; set; }         // Ticket price
         public int TotalCapacity { get; set; }     // Total capacity of the event
@@ -14,11 +14,13 @@ public class EventModel
         public int TotalAttendees { get; set; }     // Total number of attendees
         public bool IsCancelled { get; set; }      // Flag to indicate if the event is cancelled
         public string Organizer { get; set; }       // Name of the event organizer
+        public int OrganizerId { get; set; }       // ID of the event organizer
         public string Description { get; set; }     // Description of the event
         public List<string> AttendeeList { get; }   // List of attendee names // Maybe change to ParticipantID
         //GO GO GO GAGAGA HUHUH MAMA
-        public EventModel(int eventId, string name, string city, DateTime startDate, DateTime endDate, decimal price, int totalCapacity, string organizer, string description)
+        public EventModel(int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, decimal price, int totalCapacity, string organizer, int organizerId, string description)
         {
+            OrganizerId = organizerId;
             EventId = eventId;
             Name = name;
             City = city;
@@ -32,6 +34,7 @@ public class EventModel
             Organizer = organizer;
             Description = description;
             AttendeeList = new List<string>();
+            Street = street;
         }
 
         // Method to add an image URL to the event

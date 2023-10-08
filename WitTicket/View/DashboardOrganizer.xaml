@@ -3,95 +3,113 @@
     x:Class="WitTicket.View.DashboardOrganizer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="">
-    <FlexLayout Direction="Row" JustifyContent="SpaceBetween">
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    Title=""
+    BackgroundImageSource="background_stadium.png">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
 
-        <VerticalStackLayout BackgroundColor="LightGrey" WidthRequest="250">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="auto" />
+        </Grid.RowDefinitions>
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="0,0,0,0"
+            BackgroundColor="#3498db"
+            WidthRequest="250">
+            <VerticalStackLayout.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="TextColor" Value="#ecf0f1" />
+                    <Setter Property="FontAttributes" Value="Bold" />
+                    <Setter Property="CornerRadius" Value="0" />
+                    <Setter Property="FontFamily" Value="Roboto" />
+                    <Setter Property="BackgroundColor" Value="Transparent" />
+                </Style>
+                <Style TargetType="Label">
+                    <Setter Property="TextColor" Value="#ecf0f1" />
+                </Style>
+            </VerticalStackLayout.Resources>
             <VerticalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
-                <Label FontSize="Medium" Text="{Binding FirstName}" />
-                <Label FontSize="Micro" Text="Event Organizer" />
+
+                <HorizontalStackLayout>
+                    <VerticalStackLayout>
+                        <Label
+                            FontAttributes="Bold"
+                            FontSize="Medium"
+                            Text="{Binding ActiveUser.FirstName}" />
+                        <Label
+                            FontAttributes="Italic"
+                            FontSize="Micro"
+                            Text="Event Organizer" />
+
+                    </VerticalStackLayout>
+
+                </HorizontalStackLayout>
                 <Label
-                    Margin="0,0,0,20"
-                    FontSize="Medium"
+                    Margin="0,20,0,20"
+                    FontAttributes="Bold"
+                    FontSize="Large"
                     Text="Dashboard" />
+
             </VerticalStackLayout>
 
             <Button Text="Events" />
             <Button Text="Insights" />
             <Button Text="Settings" />
+
         </VerticalStackLayout>
-        <VerticalStackLayout Padding="0" WidthRequest="1300">
-            <FlexLayout Margin="50,10" JustifyContent="SpaceBetween">
-                <Label FontSize="Header" Text="Events" />
+        <VerticalStackLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            BackgroundColor="#3498db"
+            VerticalOptions="EndAndExpand">
+            <HorizontalStackLayout Padding="10,0,20,10" HorizontalOptions="Start">
+                <ImageButton
+                    Margin="10,0,0,0"
+                    Aspect="AspectFit"
+                    BackgroundColor="Transparent"
+                    Clicked="OnClickLogout"
+                    HeightRequest="8"
+                    MaximumHeightRequest="8"
+                    MaximumWidthRequest="8"
+                    Source="logout_icon.png"
+                    WidthRequest="8" />
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            Padding="50,0,50,0"
+            BackgroundColor="#ecf0f1"
+            HorizontalOptions="CenterAndExpand">
+            <FlexLayout Margin="0,30" JustifyContent="SpaceBetween">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    Text="Events"
+                    TextColor="#3498db" />
                 <HorizontalStackLayout>
-                    <ImageButton
-                        Margin="0,0,0,0"
-                        HeightRequest="16"
-                        Source="home_icon.png"
-                        WidthRequest="16" />
-                    <ImageButton
-                        Margin="0,0,0,0"
-                        HeightRequest="16"
-                        Source="home_icon.png"
-                        WidthRequest="16" />
-                    <ImageButton
-                        Margin="0,0,0,0"
-                        HeightRequest="16"
-                        Source="home_icon.png"
-                        WidthRequest="16" />
+                    <Button
+                        BackgroundColor="#3498db"
+                        Clicked="OnClickCreateEvent"
+                        FontAttributes="Bold"
+                        Text="Add Event" />
                 </HorizontalStackLayout>
             </FlexLayout>
-            <Grid
-                x:Name="tblContactList"
-                Padding="60"
-                ColumnSpacing="20">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="21" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="colId" />
-                    <ColumnDefinition x:Name="colLastName" />
-                    <ColumnDefinition x:Name="colFirstName" />
-                    <ColumnDefinition x:Name="colSchool" />
-                    <ColumnDefinition x:Name="colCourse" />
-                    <ColumnDefinition x:Name="colEmail" />
-                    <ColumnDefinition x:Name="colContact" />
-                    <ColumnDefinition x:Name="colType" />
-                </Grid.ColumnDefinitions>
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Text="ID" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    Text="Last Name" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="2"
-                    Text="First Name" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="3"
-                    Text="School" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="4"
-                    Text="Course" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="5"
-                    Text="Email" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="6"
-                    Text="Contact" />
-                <Label
-                    Grid.Row="0"
-                    Grid.Column="7"
-                    Text="Type" />
-            </Grid>
+            <ScrollView MaximumHeightRequest="400">
+                <FlexLayout x:Name="cardTargetLayout" Wrap="Wrap" />
+            </ScrollView>
         </VerticalStackLayout>
-    </FlexLayout>
+    </Grid>
 
 </ContentPage>
