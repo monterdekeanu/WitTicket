@@ -49,7 +49,27 @@ namespace WitTicket.Services
             }
             return eventList;
         }
-
+        public EventModel GetEvent(int targetId)
+        {
+            ObservableCollection<EventModel> eventList = new ObservableCollection<EventModel>();
+            string jsonString = JsonSerializer.Serialize(eventList);
+            if (!File.Exists(pathEvents))
+            {
+                File.WriteAllText(pathEvents, jsonString);
+            }
+            else
+            {
+                eventList = JsonSerializer.Deserialize<ObservableCollection<EventModel>>(File.ReadAllText(pathEvents));
+            }
+            foreach(EventModel loopEvent in eventList)
+            {
+                if(targetId== loopEvent.EventId)
+                {
+                    return loopEvent;
+                }
+            }
+            return null;
+        }
         public void AddEvents(ObservableCollection<EventModel> eventList)
         {
             string jsonString = JsonSerializer.Serialize(eventList);

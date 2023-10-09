@@ -55,6 +55,7 @@ public partial class DashboardOrganizer : ContentPage
                 cardView.WidthRequest = 200;
                 cardView.CornerRadius = 10;
                 cardView.BackgroundColor = Color.FromHex("#F0F0F0");
+                cardView.Clicked += (sender, e) => { this.ShowPopup(new DisplayEventView(activeUser,eventModel.EventId)); }; 
                 if (eventModel.Images.Count > 0)
                 {
 

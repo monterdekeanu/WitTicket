@@ -1,8 +1,11 @@
+using WitTicket.Services;
+
 namespace WitTicket.Model;
 
-public class EventModel
+public class EventModel : PropertyChecker
 {
-        public int EventId { get; set; }           // Unique identifier for the event
+    private int _eventId;
+        public int EventId { get => _eventId; set { _eventId = value; RaisePropertyChanged(nameof(EventId)); } }           // Unique identifier for the event
         public string Name { get; set; }           // Event name
         public string City { get; set; }           // City where the event is held
     public string Street { get; set; }

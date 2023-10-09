@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="WitTicket.View.Popups.DisplayEventView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    CanBeDismissedByTappingOutsideOfPopup="True">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <VerticalStackLayout
+            x:Name="textColumn"
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="0"
+            BackgroundColor="White">
+            <HorizontalStackLayout>
+                <Label Text="{Binding ActiveEvent.Name}" />
+                <Label Text=" $ " />
+                <Label Text="{Binding ActiveEvent.Price}" />
+                <Label Text=" - Total Capacity: " />
+                <Label Text="{Binding ActiveEvent.TotalCapacity}" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout>
+                <Label Text="{Binding ActiveEvent.StartDate}" />
+                <Label Text=" to " />
+                <Label Text=" " />
+                <Label Text="{Binding ActiveEvent.EndDate}" />
+            </HorizontalStackLayout>
+            <Label Text="{Binding ActiveEvent.Description}" />
+        </VerticalStackLayout>
+        <VerticalStackLayout
+            Grid.Row="0"
+            Grid.RowSpan="2"
+            Grid.Column="1"
+            BackgroundColor="AntiqueWhite" />
+
+    </Grid>
+</mct:Popup>
