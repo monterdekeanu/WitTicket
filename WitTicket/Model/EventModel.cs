@@ -44,6 +44,7 @@ public class EventModel : PropertyChecker
         public void AddImage(string imageUrl)
         {
             Images.Add(imageUrl);
+            
         }
 
         // Method to register an attendee for the event

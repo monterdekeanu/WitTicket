@@ -106,7 +106,7 @@
                         Text="Add Event" />
                 </HorizontalStackLayout>
             </FlexLayout>
-            <ScrollView MaximumHeightRequest="400">
+            <ScrollView>
                 <FlexLayout x:Name="cardTargetLayout" Wrap="Wrap" />
             </ScrollView>
         </VerticalStackLayout>

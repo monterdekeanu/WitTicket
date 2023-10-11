@@ -9,38 +9,91 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="350" />
-            <ColumnDefinition />
+            <ColumnDefinition Width="500" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition />
+            <RowDefinition Height="450" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <VerticalStackLayout
+        <FlexLayout
             x:Name="textColumn"
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="0"
-            BackgroundColor="White">
-            <HorizontalStackLayout>
-                <Label Text="{Binding ActiveEvent.Name}" />
-                <Label Text=" $ " />
-                <Label Text="{Binding ActiveEvent.Price}" />
-                <Label Text=" - Total Capacity: " />
-                <Label Text="{Binding ActiveEvent.TotalCapacity}" />
-            </HorizontalStackLayout>
-            <HorizontalStackLayout>
-                <Label Text="{Binding ActiveEvent.StartDate}" />
-                <Label Text=" to " />
-                <Label Text=" " />
-                <Label Text="{Binding ActiveEvent.EndDate}" />
-            </HorizontalStackLayout>
-            <Label Text="{Binding ActiveEvent.Description}" />
-        </VerticalStackLayout>
+            BackgroundColor="#ecf0f1"
+            Direction="Column"
+            JustifyContent="SpaceBetween"
+            MaximumHeightRequest="450">
+
+            <VerticalStackLayout Padding="20">
+                <Label
+                    Margin="0,0,0,20"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalTextAlignment="Center"
+                    Text="{Binding ActiveEvent.Name}" />
+                <FlexLayout JustifyContent="SpaceBetween">
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label
+                                Margin="0,0,2,0"
+                                FontAttributes="Bold"
+                                FontSize="Micro"
+                                Text="Price:" />
+                            <Label FontSize="Micro" Text=" $ " />
+                            <Label FontSize="Micro" Text="{Binding ActiveEvent.Price}" />
+                        </HorizontalStackLayout>
+                        <Label
+                            Margin="0,2,0,2"
+                            FontAttributes="Bold"
+                            FontSize="Micro"
+                            Text="Start Date:" />
+                        <Label FontSize="Micro" Text="{Binding EventStartDate}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label
+                                Margin="0,0,2,0"
+                                FontAttributes="Bold"
+                                FontSize="Micro"
+                                Text="Total Capacity:" />
+                            <Label FontSize="Micro" Text="{Binding ActiveEvent.TotalCapacity}" />
+                        </HorizontalStackLayout>
+                        <Label
+                            Margin="0,2,0,2"
+                            FontAttributes="Bold"
+                            FontSize="Micro"
+                            Text="End Date:" />
+                        <Label FontSize="Micro" Text="{Binding EventEndDate}" />
+                    </VerticalStackLayout>
+
+                </FlexLayout>
+                <Label
+                    Margin="0,20,0,2"
+                    FontAttributes="Bold"
+                    FontSize="Micro"
+                    Text="Details:" />
+                <ScrollView>
+                    <Label Text="{Binding ActiveEvent.Description}" />
+                </ScrollView>
+            </VerticalStackLayout>
+
+            <Button CornerRadius="0" Text="Modify" />
+        </FlexLayout>
         <VerticalStackLayout
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="1"
-            BackgroundColor="AntiqueWhite" />
+            BackgroundColor="#3498db">
+            <Image
+                x:Name="imgHighlight"
+                Aspect="Fill"
+                HeightRequest="281"
+                WidthRequest="500" />
+            <ScrollView HorizontalScrollBarVisibility="Always" Orientation="Horizontal">
+                <HorizontalStackLayout x:Name="svImageContainer" />
+            </ScrollView>
+        </VerticalStackLayout>
 
     </Grid>
 </mct:Popup>

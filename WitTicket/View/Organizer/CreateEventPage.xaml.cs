@@ -154,6 +154,11 @@ public partial class CreateEventPage : ContentPage
         }
     }
 
+    private async void OnClickAutoGenerate(object sender, EventArgs e)
+    {
+        string response = await new Services.AutoGenerate().GenerateContentAsync("how old is chatgpt?");
+        await DisplayAlert("Haha", response, "OK");
+    }
     private bool ValidateInput()
     {
         if (string.IsNullOrWhiteSpace(eventNameEntry.Text))
