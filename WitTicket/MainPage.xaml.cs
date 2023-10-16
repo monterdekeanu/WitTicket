@@ -21,6 +21,7 @@
         }
 
 
+
         private void InitializeDirectory()
         {
             if (!Directory.Exists(Environment.GetEnvironmentVariable("DATABASE_USERS")))

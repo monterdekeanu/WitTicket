@@ -49,12 +49,14 @@
                     Text="BROWSE"
                     TextColor="#3498db" />
                 <HorizontalStackLayout>
-                    <Picker Title="Date" />
+                    <Picker x:Name="cbo" Title="Date" />
+                    
                     <Picker Title="Title" />
                 </HorizontalStackLayout>
             </FlexLayout>
             <FlexLayout
                 x:Name="flEventsContainer"
+                Margin="100,0,100,0"
                 HorizontalOptions="FillAndExpand"
                 Wrap="Wrap" />
         </VerticalStackLayout>

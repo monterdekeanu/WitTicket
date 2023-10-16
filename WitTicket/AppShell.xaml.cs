@@ -12,6 +12,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
         Routing.RegisterRoute(nameof(DashboardOrganizer), typeof(DashboardOrganizer));
         Routing.RegisterRoute(nameof(DashboardParticipant), typeof(DashboardParticipant));
+        Routing.RegisterRoute(nameof(ParticipateEvent), typeof(ParticipateEvent));
         //ENVIRONMENT
         Environment.SetEnvironmentVariable("DATABASE_EVENT_IMAGES", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Database\\Events\\Images"), EnvironmentVariableTarget.Process);
         Environment.SetEnvironmentVariable("DATABASE_EVENTS", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Database\\Events"), EnvironmentVariableTarget.Process);

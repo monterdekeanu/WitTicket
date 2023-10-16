@@ -19,7 +19,7 @@ public class EventModel : PropertyChecker
         public string Organizer { get; set; }       // Name of the event organizer
         public int OrganizerId { get; set; }       // ID of the event organizer
         public string Description { get; set; }     // Description of the event
-        public List<string> AttendeeList { get; }   // List of attendee names // Maybe change to ParticipantID
+        public List<string> TicketIDList { get; }   // List of attendee names // Maybe change to ParticipantID
         //GO GO GO GAGAGA HUHUH MAMA
         public EventModel(int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, decimal price, int totalCapacity, string organizer, int organizerId, string description)
         {
@@ -36,7 +36,7 @@ public class EventModel : PropertyChecker
             IsCancelled = false;
             Organizer = organizer;
             Description = description;
-            AttendeeList = new List<string>();
+        TicketIDList = new List<string>();
             Street = street;
         }
 
@@ -53,7 +53,7 @@ public class EventModel : PropertyChecker
             if (!IsCancelled && TotalAttendees < TotalCapacity)
             {
                 TotalAttendees++;
-                AttendeeList.Add(attendeeName);
+                TicketIDList.Add(attendeeName);
                 return true; // Registration successful
             }
             else

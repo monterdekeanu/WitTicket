@@ -15,6 +15,14 @@ namespace WitTicket.Model
         private string _firstName;
         private string _lastName;
         private DateOnly _dateOfBirth;
+        private HashSet<int> _eventsParticipated;
+
+        public HashSet<int> EventsParticipated { get => _eventsParticipated; set
+            {
+                _eventsParticipated = value;
+                RaisePropertyChanged(nameof(EventsParticipated));
+            }
+        }
         public int AccountId
         {
             get => _accountId; set

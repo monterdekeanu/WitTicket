@@ -28,7 +28,6 @@ public partial class LoginPage : ContentPage
 					await DisplayAlert("Success", "Login successful", "OK");
 					if(tmpUser.AccountType=="Participant")
 					{
-						await DisplayAlert("Success", "Login successful || No User UI yet || Try Organizer :(", "OK");
                         await Navigation.PushAsync(new DashboardParticipant(user));
                     }
                     else if(tmpUser.AccountType=="Organizer")

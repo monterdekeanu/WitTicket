@@ -3,6 +3,8 @@ using CommunityToolkit.Maui.Views;
 using System.Collections.ObjectModel;
 using WitTicket.Model;
 using WitTicket.View.Popups;
+using static OpenAI.ObjectModels.SharedModels.IOpenAiModels;
+
 public partial class DashboardParticipant : ContentPage
 {
     private ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
@@ -31,10 +33,9 @@ public partial class DashboardParticipant : ContentPage
                 cardView.WidthRequest = 200;
                 cardView.CornerRadius = 10;
                 cardView.BackgroundColor = Color.FromHex("#F0F0F0");
-                cardView.Clicked += async (sender, e) => { this.ShowPopup(new DisplayEventView(ActiveUser, eventModel.EventId)); };
+                cardView.Clicked += async (sender, e) => { await Navigation.PushAsync(new ParticipateEvent(eventModel)); };
                 if (eventModel.Images.Count > 0)
                 {
-
                     cardView.Source = ImageSource.FromFile($@"{Path.Combine(Environment.GetEnvironmentVariable("DATABASE_EVENT_IMAGES", EnvironmentVariableTarget.Process), eventModel.Images[0])}");
                 }
                 else

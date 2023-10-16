@@ -76,6 +76,9 @@
 	  <MauiXaml Update="View\Participant\DashboardParticipant.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\Participant\ParticipateEvent.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Popups\AddEventPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

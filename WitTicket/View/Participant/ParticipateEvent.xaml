@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WitTicket.View.Participant.ParticipateEvent"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="">
+    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+
+        <HorizontalStackLayout>
+            <VerticalStackLayout>
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="Center"
+                    Text="{Binding ActiveEvent.Name}"
+                    VerticalOptions="Center" />
+                <Editor IsReadOnly="True" Text="{Binding ActiveEvent.Description}" />
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    Text="Order Ticket(s):"
+                    VerticalOptions="Center" />
+                <Grid
+                    ColumnDefinitions="*,*,*"
+                    ColumnSpacing="30"
+                    HorizontalOptions="Center"
+                    RowDefinitions="*,*,*,*,*">
+                    <Label
+                        Grid.Column="0"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="Type"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="Price"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        FontSize="Medium"
+                        HorizontalOptions="Center"
+                        Text="Quantity"
+                        VerticalOptions="Center" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        FontSize="Small"
+                        Text="VIP" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        FontSize="Small"
+                        Text="Regular" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        FontSize="Small"
+                        Text="Admission" />
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        FontSize="Small"
+                        Text="$500" />
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        FontSize="Small"
+                        Text="$250" />
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        FontSize="Small"
+                        Text="$150" />
+                    <FlexLayout
+                        Grid.Row="1"
+                        Grid.Column="2"
+                        JustifyContent="SpaceBetween"
+                        VerticalOptions="End">
+                        <Label
+                            x:Name="lblVipCount"
+                            FontAttributes="Bold"
+                            Text="0"
+                            VerticalTextAlignment="Center" />
+                        <Stepper
+                            Increment="1"
+                            Maximum="5"
+                            Minimum="0" />
+                    </FlexLayout>
+                    <FlexLayout
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        JustifyContent="SpaceBetween"
+                        VerticalOptions="End">
+                        <Label
+                            x:Name="lblRegularCount"
+                            FontAttributes="Bold"
+                            Text="0"
+                            VerticalTextAlignment="Center" />
+                        <Stepper
+                            Increment="1"
+                            Maximum="5"
+                            Minimum="0" />
+                    </FlexLayout>
+                    <FlexLayout
+                        Grid.Row="3"
+                        Grid.Column="2"
+                        JustifyContent="SpaceBetween"
+                        VerticalOptions="End">
+                        <Label
+                            x:Name="lblAdmissionCount"
+                            FontAttributes="Bold"
+                            Text="0"
+                            VerticalTextAlignment="Center" />
+                        <Stepper
+                            Increment="1"
+                            Maximum="5"
+                            Minimum="0" />
+                    </FlexLayout>
+                </Grid>
+                <Button Text="Purchase Ticket" />
+
+            </VerticalStackLayout>
+            <VerticalStackLayout>
+                <ScrollView
+                    HorizontalOptions="FillAndExpand"
+                    Orientation="Horizontal"
+                    WidthRequest="400">
+                    <FlexLayout
+                        x:Name="imgContainer"
+                        Direction="Column"
+                        HeightRequest="400"
+                        Wrap="Wrap" />
+                </ScrollView>
+            </VerticalStackLayout>
+        </HorizontalStackLayout>
+
+        <Label HorizontalOptions="CenterAndExpand" />
+    </VerticalStackLayout>
+</ContentPage>
