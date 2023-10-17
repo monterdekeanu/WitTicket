@@ -2,6 +2,7 @@ namespace WitTicket.View;
 
 using System.Collections.ObjectModel;
 using WitTicket.Model;
+using WitTicket.View.Participant;
 public partial class LoginPage : ContentPage
 {
     public UserModel tmpUser = new UserModel();
@@ -28,7 +29,7 @@ public partial class LoginPage : ContentPage
 					if(tmpUser.AccountType=="Participant")
 					{
 						await DisplayAlert("Success", "Login successful || No User UI yet || Try Organizer :(", "OK");
-                        //await Navigation.PushAsync(new DashboardParticipant(user));
+                        await Navigation.PushAsync(new DashboardParticipant(user));
                     }
                     else if(tmpUser.AccountType=="Organizer")
 					{

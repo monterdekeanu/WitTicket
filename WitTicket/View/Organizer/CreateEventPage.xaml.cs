@@ -81,7 +81,7 @@ public partial class CreateEventPage : ContentPage
             ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
             
             EventModel eventModel = new EventModel(
-                eventId: 0, // You can set this to an appropriate value GET LIST FIRST THEN UPDATE AS IT AAAAAAAAAAAA
+                eventId: 0, // You can set this to an appropriate value GET LIST FIRST THEN UPDATE AS IT AAAAAAAAAAAA TABANG MGA LANGIT
                 name: eventNameEntry.Text,
                 city: cityEntry.Text,
                 street: Street.Text,

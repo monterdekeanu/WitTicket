@@ -24,7 +24,7 @@ namespace WitTicket.Services
             _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
             var requestBody = new
             {
-                prompt = prompt,
+                Messages = prompt,
                 model = "gpt-3.5-turbo",
                 max_tokens = 150,
                 temperature = 0.5

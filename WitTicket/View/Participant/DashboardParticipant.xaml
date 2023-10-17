@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="WitTicket.View.Participant.DashboardParticipant"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <FlexLayout
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundColor="#3498db"
+            HorizontalOptions="FillAndExpand"
+            JustifyContent="SpaceBetween"
+            VerticalOptions="CenterAndExpand">
+            <Label
+                Padding="20,10,20,20"
+                FontAttributes="Bold"
+                FontSize="Header"
+                Text="WitTicket"
+                TextColor="#ecf0f1" />
+            <HorizontalStackLayout Padding="10">
+                <SearchBar
+                    BackgroundColor="#ecf0f1"
+                    HeightRequest="24"
+                    WidthRequest="258" />
+            </HorizontalStackLayout>
+        </FlexLayout>
+        <VerticalStackLayout
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Start">
+            <FlexLayout
+                Margin="30,10,30,10"
+                HorizontalOptions="FillAndExpand"
+                JustifyContent="SpaceBetween">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    Text="BROWSE"
+                    TextColor="#3498db" />
+                <HorizontalStackLayout>
+                    <Picker Title="Date" />
+                    <Picker Title="Title" />
+                </HorizontalStackLayout>
+            </FlexLayout>
+            <FlexLayout
+                x:Name="flEventsContainer"
+                HorizontalOptions="FillAndExpand"
+                Wrap="Wrap" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
