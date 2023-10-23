@@ -31,7 +31,10 @@ public partial class CreateEventPage : ContentPage
         }
         eventClasses.Add(new EventClassModel(eventClassCount, txtClassName.Text, double.Parse(txtPrice.Text), 10, eventId));
     }
-
+    private void OnClickRemoveClass (object sender, EventArgs e)
+    {
+        eventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
+    }
     private async void OnClickUploadImage(object sender, EventArgs e)
     {
         selectedImagesData.Clear();
