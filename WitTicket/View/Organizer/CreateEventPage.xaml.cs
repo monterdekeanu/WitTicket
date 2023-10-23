@@ -6,6 +6,7 @@ namespace WitTicket.View.Organizer;
 
 public partial class CreateEventPage : ContentPage
 {
+    private int eventClassCount = 0;
     private List<byte[]> selectedImagesData = new List<byte[]>(); // Store selected images in a list
     private List<string> selectedImageFileNames = new List<string>();
     public ObservableCollection<EventClassModel> eventClasses { get; set; }
@@ -22,7 +23,13 @@ public partial class CreateEventPage : ContentPage
 
     private void OnClickAddClass(object sender, EventArgs e)
     {
-        eventClasses.Add(new EventClassModel(0, "Starting", 50.00, 10, 1));
+        ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
+        int eventId = 0;
+        if(events.Count>0)
+        {
+            eventId = events.Last().EventId + 1;
+        }
+        eventClasses.Add(new EventClassModel(eventClassCount, txtClassName.Text, double.Parse(txtPrice.Text), 10, eventId));
     }
 
     private async void OnClickUploadImage(object sender, EventArgs e)
