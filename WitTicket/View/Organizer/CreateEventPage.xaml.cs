@@ -8,11 +8,21 @@ public partial class CreateEventPage : ContentPage
 {
     private List<byte[]> selectedImagesData = new List<byte[]>(); // Store selected images in a list
     private List<string> selectedImageFileNames = new List<string>();
-    UserModel activeUser = new();
+    public ObservableCollection<EventClassModel> eventClasses { get; set; }
+    public UserModel activeUser = new();
     public CreateEventPage(UserModel user)
     {
         InitializeComponent();
+        
+        eventClasses = new ObservableCollection<EventClassModel>();
+        eventClasses.Add(new EventClassModel(0, "Starting", 50.00, 10, 1));
         activeUser = user;
+        BindingContext = this;
+    }
+
+    private void OnClickAddClass(object sender, EventArgs e)
+    {
+        eventClasses.Add(new EventClassModel(0, "Starting", 50.00, 10, 1));
     }
 
     private async void OnClickUploadImage(object sender, EventArgs e)
@@ -81,13 +91,14 @@ public partial class CreateEventPage : ContentPage
             ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
             
             EventModel eventModel = new EventModel(
+                eventClasses: new List<EventClassModel>(),
                 eventId: 0, // You can set this to an appropriate value GET LIST FIRST THEN UPDATE AS IT AAAAAAAAAAAA TABANG MGA LANGIT
                 name: eventNameEntry.Text,
                 city: cityEntry.Text,
                 street: Street.Text,
                 startDate: startDatePicker.Date + startTimePicker.Time,
                 endDate: endDatePicker.Date + endTimePicker.Time,
-                price: decimal.Parse(priceEntry.Text),
+                price: decimal.Parse("23.25"),//decimal.Parse(priceEntry.Text),
                 totalCapacity: int.Parse(capacityEntry.Text),
                 organizer: activeUser.FirstName + " " + activeUser.LastName, // Replace with the actual organizer's name
                 organizerId: activeUser.AccountId,
@@ -185,7 +196,7 @@ public partial class CreateEventPage : ContentPage
             return false;
         }
 
-        if (!decimal.TryParse(priceEntry.Text, out decimal price) || price <= 0)
+        if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
         {
             DisplayAlert("Error", "Invalid or empty Price value.", "OK");
             return false;
