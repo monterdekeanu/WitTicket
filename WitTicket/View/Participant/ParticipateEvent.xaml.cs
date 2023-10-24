@@ -26,9 +26,9 @@ public partial class ParticipateEvent : ContentPage
             {
                     Image image = new Image();
                     image.Source = ImageSource.FromFile($@"{Path.Combine(Environment.GetEnvironmentVariable("DATABASE_EVENT_IMAGES", EnvironmentVariableTarget.Process), fileName)}");
-                    image.WidthRequest = 300;
-                    image.HeightRequest = 400;
-                    image.Aspect = Aspect.Fill;
+                    image.WidthRequest = 400;
+                    image.HeightRequest = 300;
+                    image.Aspect = Aspect.AspectFill;
                     imgContainer.Children.Add(image);
             }
         }

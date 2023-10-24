@@ -34,31 +34,32 @@
                     WidthRequest="258" />
             </HorizontalStackLayout>
         </FlexLayout>
-        <VerticalStackLayout
+        <ScrollView
             Grid.Row="1"
             Grid.Column="0"
-            Grid.ColumnSpan="2"
-            HorizontalOptions="Start">
-            <FlexLayout
-                Margin="30,10,30,10"
-                HorizontalOptions="FillAndExpand"
-                JustifyContent="SpaceBetween">
-                <Label
-                    FontAttributes="Bold"
-                    FontSize="Header"
-                    Text="BROWSE"
-                    TextColor="#3498db" />
-                <HorizontalStackLayout>
-                    <Picker x:Name="cbo" Title="Date" />
-                    
-                    <Picker Title="Title" />
-                </HorizontalStackLayout>
-            </FlexLayout>
-            <FlexLayout
-                x:Name="flEventsContainer"
-                Margin="100,0,100,0"
-                HorizontalOptions="FillAndExpand"
-                Wrap="Wrap" />
-        </VerticalStackLayout>
+            Grid.ColumnSpan="2">
+            <VerticalStackLayout HorizontalOptions="Start">
+                <FlexLayout
+                    Margin="30,10,30,10"
+                    HorizontalOptions="FillAndExpand"
+                    JustifyContent="SpaceBetween">
+                    <Label
+                        FontAttributes="Bold"
+                        FontSize="Header"
+                        Text="BROWSE"
+                        TextColor="#3498db" />
+                    <HorizontalStackLayout>
+                        <Picker x:Name="cbo" Title="Date" />
+
+                        <Picker Title="Title" />
+                    </HorizontalStackLayout>
+                </FlexLayout>
+                <FlexLayout
+                    x:Name="flEventsContainer"
+                    Margin="100,0,100,0"
+                    HorizontalOptions="FillAndExpand"
+                    Wrap="Wrap" />
+            </VerticalStackLayout>
+        </ScrollView>
     </Grid>
 </ContentPage>
