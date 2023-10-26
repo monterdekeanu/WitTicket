@@ -9,18 +9,22 @@ public partial class CreateEventPage : ContentPage
     private int eventClassCount = 0;
     private List<byte[]> selectedImagesData = new List<byte[]>(); // Store selected images in a list
     private List<string> selectedImageFileNames = new List<string>();
-    public ObservableCollection<EventClassModel> eventClasses { get; set; }
+    public ObservableCollection<EventClassModel> EventClasses { get; set; }
     public UserModel activeUser = new();
     public CreateEventPage(UserModel user)
     {
         InitializeComponent();
-        
-        eventClasses = new ObservableCollection<EventClassModel>();
-        eventClasses.Add(new EventClassModel(0, "Starting", 50.00, 10, 1));
+        EventClasses = new ObservableCollection<EventClassModel>();
         activeUser = user;
         BindingContext = this;
+        
     }
-
+    private void UpdateCapacity()
+    {
+        int totalCapacity = 0;
+        EventClasses.ToList().ForEach(x => totalCapacity += x.ClassMaxQuantity);
+        capacityEntry.Text = totalCapacity.ToString();
+    }
     private void OnClickAddClass(object sender, EventArgs e)
     {
         ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
@@ -29,11 +33,25 @@ public partial class CreateEventPage : ContentPage
         {
             eventId = events.Last().EventId + 1;
         }
-        eventClasses.Add(new EventClassModel(eventClassCount, txtClassName.Text, double.Parse(txtPrice.Text), 10, eventId));
+        try
+        {
+            EventClasses.Add(new EventClassModel(eventClassCount, txtClassName.Text, double.Parse(txtPrice.Text), Int32.Parse(txtQuantity.Text), eventId));
+            txtClassName.Text = "";
+            txtPrice.Text = "";
+            txtQuantity.Text = "";
+            eventClassCount++;
+            UpdateCapacity();
+        }
+        catch(Exception err)
+        {
+            DisplayAlert("Invalid Input", "Input numeric price value only.", "OK");
+            Console.WriteLine(err);
+        }
     }
     private void OnClickRemoveClass (object sender, EventArgs e)
     {
-        eventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
+        EventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
+        UpdateCapacity();
     }
     private async void OnClickUploadImage(object sender, EventArgs e)
     {
@@ -101,14 +119,14 @@ public partial class CreateEventPage : ContentPage
             ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
             
             EventModel eventModel = new EventModel(
-                eventClasses: new List<EventClassModel>(),
+                eventClasses: EventClasses.ToList<EventClassModel>(),
                 eventId: 0, // You can set this to an appropriate value GET LIST FIRST THEN UPDATE AS IT AAAAAAAAAAAA TABANG MGA LANGIT
                 name: eventNameEntry.Text,
                 city: cityEntry.Text,
                 street: Street.Text,
                 startDate: startDatePicker.Date + startTimePicker.Time,
                 endDate: endDatePicker.Date + endTimePicker.Time,
-                price: decimal.Parse("23.25"),//decimal.Parse(priceEntry.Text),
+                price: EventClasses[0].ClassPrice,//decimal.Parse(priceEntry.Text),
                 totalCapacity: int.Parse(capacityEntry.Text),
                 organizer: activeUser.FirstName + " " + activeUser.LastName, // Replace with the actual organizer's name
                 organizerId: activeUser.AccountId,

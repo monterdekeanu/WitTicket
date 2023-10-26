@@ -3,6 +3,7 @@
     x:Class="WitTicket.View.Participant.ParticipateEvent"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:WitTicket.Model"
     Title="">
 
     <ScrollView>
@@ -68,118 +69,80 @@
                             Text="{Binding ActiveEvent.Name}"
                             VerticalOptions="Center" />
                         <Editor IsReadOnly="True" Text="{Binding ActiveEvent.Description}" />
-
                         <Label
                             FontAttributes="Bold"
                             FontSize="Medium"
                             HorizontalOptions="Center"
                             Text="Order Ticket(s):"
                             VerticalOptions="Center" />
-                        <Grid
-                            ColumnDefinitions="*,*,*"
-                            ColumnSpacing="30"
-                            HorizontalOptions="Center"
-                            RowDefinitions="*,*,*,*,*">
-                            <Label
-                                Grid.Column="0"
-                                FontAttributes="Bold"
-                                FontSize="Medium"
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActiveEvent.EventClasses}">
+                            <Grid
+                                ColumnDefinitions="*,*,*"
+                                ColumnSpacing="30"
                                 HorizontalOptions="Center"
-                                Text="Type"
-                                VerticalOptions="Center" />
-                            <Label
-                                Grid.Column="1"
-                                FontAttributes="Bold"
-                                FontSize="Medium"
-                                HorizontalOptions="Center"
-                                Text="Price"
-                                VerticalOptions="Center" />
-                            <Label
-                                Grid.Column="2"
-                                FontAttributes="Bold"
-                                FontSize="Medium"
-                                HorizontalOptions="Center"
-                                Text="Quantity"
-                                VerticalOptions="Center" />
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="0"
-                                FontSize="Small"
-                                Text="VIP" />
-                            <Label
-                                Grid.Row="2"
-                                Grid.Column="0"
-                                FontSize="Small"
-                                Text="Regular" />
-                            <Label
-                                Grid.Row="3"
-                                Grid.Column="0"
-                                FontSize="Small"
-                                Text="Admission" />
-                            <Label
-                                Grid.Row="1"
-                                Grid.Column="1"
-                                FontSize="Small"
-                                Text="$500" />
-                            <Label
-                                Grid.Row="2"
-                                Grid.Column="1"
-                                FontSize="Small"
-                                Text="$250" />
-                            <Label
-                                Grid.Row="3"
-                                Grid.Column="1"
-                                FontSize="Small"
-                                Text="$150" />
-                            <FlexLayout
-                                Grid.Row="1"
-                                Grid.Column="2"
-                                JustifyContent="SpaceEvenly"
-                                VerticalOptions="End">
+                                RowDefinitions="*,*,*,*,*">
                                 <Label
-                                    x:Name="lblVipCount"
+                                    Grid.Column="0"
                                     FontAttributes="Bold"
-                                    Text="{Binding Source={x:Reference stpVipCount}, Path=Value}"
-                                    VerticalTextAlignment="Center" />
-                                <Stepper
-                                    x:Name="stpVipCount"
-                                    Increment="1"
-                                    Maximum="5"
-                                    Minimum="0" />
-                            </FlexLayout>
-                            <FlexLayout
-                                Grid.Row="2"
-                                Grid.Column="2"
-                                JustifyContent="SpaceEvenly"
-                                VerticalOptions="End">
+                                    FontSize="Medium"
+                                    HorizontalOptions="Center"
+                                    Text="Type"
+                                    VerticalOptions="Center" />
                                 <Label
-                                    x:Name="lblRegularCount"
+                                    Grid.Column="1"
                                     FontAttributes="Bold"
-                                    Text="{Binding Source={x:Reference stpRegularCount}, Path=Value}"
-                                    VerticalTextAlignment="Center" />
-                                <Stepper
-                                    x:Name="stpRegularCount"
-                                    Increment="1"
-                                    Maximum="5"
-                                    Minimum="0" />
-                            </FlexLayout>
-                            <FlexLayout
-                                Grid.Row="3"
-                                Grid.Column="2"
-                                JustifyContent="SpaceEvenly"
-                                VerticalOptions="End">
+                                    FontSize="Medium"
+                                    HorizontalOptions="Center"
+                                    Text="Price"
+                                    VerticalOptions="Center" />
                                 <Label
-                                    x:Name="lblAdmissionCount"
+                                    Grid.Column="2"
                                     FontAttributes="Bold"
-                                    Text="{Binding Source={x:Reference stpAdmissionCount}, Path=Value}"
-                                    VerticalTextAlignment="Center" />
-                                <Stepper
-                                    x:Name="stpAdmissionCount"
-                                    Increment="1"
-                                    Maximum="5"
-                                    Minimum="0" />
-                            </FlexLayout>
-                        </Grid>
+                                    FontSize="Medium"
+                                    HorizontalOptions="Center"
+                                    Text="Quantity"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="model:EventClassModel">
+                                    <Grid
+                                        ColumnDefinitions="*,*,*"
+                                        ColumnSpacing="30"
+                                        HorizontalOptions="Center"
+                                        RowDefinitions="*,*,*,*,*">
+
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="0"
+                                            FontSize="Small"
+                                            Text="{Binding ClassName}" />
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontSize="Small"
+                                            Text="{Binding ClassPrice, StringFormat='$ {0,2F}'}" />
+                                        <FlexLayout
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            JustifyContent="SpaceEvenly"
+                                            VerticalOptions="End">
+                                            <Label
+                                                x:Name="lblVipCount"
+                                                FontAttributes="Bold"
+                                                Text="{Binding Source={x:Reference stpVipCount}, Path=Value}"
+                                                VerticalTextAlignment="Center" />
+                                            <Stepper
+                                                x:Name="stpVipCount"
+                                                Increment="1"
+                                                Maximum="5"
+                                                Minimum="0" />
+                                        </FlexLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+
                         <Button Text="Purchase Ticket" />
 
                     </VerticalStackLayout>

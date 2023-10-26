@@ -41,7 +41,6 @@ public partial class DashboardParticipant : ContentPage
                 else
                 {
                     cardView.Source = ImageSource.FromFile("dotnet_bot.png");
-
                 }
                 Label lblEventName = new();
                 lblEventName.Text = FormatStringWithEllipsis(eventModel.Name);

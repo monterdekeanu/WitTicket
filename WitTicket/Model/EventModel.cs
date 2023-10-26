@@ -11,7 +11,7 @@ public class EventModel : PropertyChecker
         public string Street { get; set; }
         public DateTime StartDate { get; set; }    // Date and time when the event starts
         public DateTime EndDate { get; set; }      // Date and time when the event ends
-        public decimal Price { get; set; }         // Ticket price
+        public double Price { get; set; }         // Ticket price
         public int TotalCapacity { get; set; }     // Total capacity of the event
         public List<string> Images { get; set; }    // List of image URLs
         public List<EventClassModel> EventClasses { get; set; } // Classes Available for the event
@@ -22,7 +22,7 @@ public class EventModel : PropertyChecker
         public string Description { get; set; }     // Description of the event
         public List<string> TicketIDList { get; }   // List of attendee names // Maybe change to ParticipantID
         //GO GO GO GAGAGA HUHUH MAMA
-        public EventModel(List<EventClassModel> eventClasses, int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, decimal price, int totalCapacity, string organizer, int organizerId, string description)
+        public EventModel(List<EventClassModel> eventClasses, int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, double price, int totalCapacity, string organizer, int organizerId, string description)
         {
             EventClasses = eventClasses;
             OrganizerId = organizerId;
