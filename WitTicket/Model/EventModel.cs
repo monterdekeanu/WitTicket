@@ -20,7 +20,6 @@ public class EventModel : PropertyChecker
         public string Organizer { get; set; }       // Name of the event organizer
         public int OrganizerId { get; set; }       // ID of the event organizer
         public string Description { get; set; }     // Description of the event
-        public List<string> TicketIDList { get; }   // List of attendee names // Maybe change to ParticipantID
         //GO GO GO GAGAGA HUHUH MAMA
         public EventModel(List<EventClassModel> eventClasses, int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, double price, int totalCapacity, string organizer, int organizerId, string description)
         {
@@ -38,7 +37,6 @@ public class EventModel : PropertyChecker
             IsCancelled = false;
             Organizer = organizer;
             Description = description;
-            TicketIDList = new List<string>();
             Street = street;
         }
 
@@ -47,21 +45,6 @@ public class EventModel : PropertyChecker
         {
             Images.Add(imageUrl);
             
-        }
-
-        // Method to register an attendee for the event
-        public bool RegisterAttendee(string attendeeName)
-        {
-            if (!IsCancelled && TotalAttendees < TotalCapacity)
-            {
-                TotalAttendees++;
-                TicketIDList.Add(attendeeName);
-                return true; // Registration successful
-            }
-            else
-            {
-                return false; // Event is at full capacity or cancelled
-            }
         }
 
         // Method to cancel the event

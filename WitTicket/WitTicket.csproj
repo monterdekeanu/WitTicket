@@ -32,7 +32,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\witticket_logo.png" BaseSize="128,128"  />
 
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
@@ -53,6 +53,7 @@
 	  <None Remove="Resources\Images\home_icon.svg" />
 	  <None Remove="Resources\Images\logout_icon.png" />
 	  <None Remove="Resources\Images\no_image.png" />
+	  <None Remove="Resources\Images\witticket_logo.png" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,6 +72,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Organizer\CreateEventPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\Participant\CheckoutView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\Participant\DashboardParticipant.xaml">

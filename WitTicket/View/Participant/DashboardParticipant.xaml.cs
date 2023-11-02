@@ -33,7 +33,7 @@ public partial class DashboardParticipant : ContentPage
                 cardView.WidthRequest = 200;
                 cardView.CornerRadius = 10;
                 cardView.BackgroundColor = Color.FromHex("#F0F0F0");
-                cardView.Clicked += async (sender, e) => { await Navigation.PushAsync(new ParticipateEvent(eventModel)); };
+                cardView.Clicked += async (sender, e) => { await Navigation.PushAsync(new ParticipateEvent(eventModel,ActiveUser.AccountId)); };
                 if (eventModel.Images.Count > 0)
                 {
                     cardView.Source = ImageSource.FromFile($@"{Path.Combine(Environment.GetEnvironmentVariable("DATABASE_EVENT_IMAGES", EnvironmentVariableTarget.Process), eventModel.Images[0])}");

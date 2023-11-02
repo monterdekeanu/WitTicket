@@ -46,16 +46,49 @@
 
                 <HorizontalStackLayout>
                     <VerticalStackLayout>
-                        <ScrollView
-                            HorizontalOptions="FillAndExpand"
-                            Orientation="Horizontal"
+                        <CarouselView
+                            x:Name="cvImgs"
+                            IndicatorView="indicatorView"
+                            ItemsSource="{Binding ActiveEvent.Images}"
+                            Loop="False"
+                            PeekAreaInsets="30"
+                            VerticalScrollBarVisibility="Never"
                             WidthRequest="400">
-                            <FlexLayout
-                                x:Name="imgContainer"
-                                Direction="Column"
-                                HeightRequest="400"
-                                Wrap="Wrap" />
-                        </ScrollView>
+                            <CarouselView.ItemsLayout>
+                                <LinearItemsLayout
+                                    Orientation="Horizontal"
+                                    SnapPointsAlignment="Center"
+                                    SnapPointsType="Mandatory" />
+                            </CarouselView.ItemsLayout>
+
+                            <CarouselView.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout>
+                                        <Frame
+                                            Margin="20"
+                                            BorderColor="DarkGray"
+                                            CornerRadius="5"
+                                            HasShadow="True"
+                                            HeightRequest="300"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="CenterAndExpand">
+                                            <StackLayout>
+                                                <Image HeightRequest="300" WidthRequest="300">
+                                                    <Image.Source>
+                                                        <FileImageSource File="{Binding}" />
+                                                    </Image.Source>
+                                                </Image>
+                                            </StackLayout>
+                                        </Frame>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                        <IndicatorView
+                            x:Name="indicatorView"
+                            HorizontalOptions="Center"
+                            IndicatorColor="LightGray"
+                            SelectedIndicatorColor="DarkGray" />
                     </VerticalStackLayout>
 
 
@@ -64,7 +97,7 @@
                         <Label
                             Margin="0,0,0,20"
                             FontAttributes="Bold"
-                            FontSize="Header"
+                            FontSize="Large"
                             HorizontalOptions="Center"
                             Text="{Binding ActiveEvent.Name}"
                             VerticalOptions="Center" />
@@ -85,21 +118,21 @@
                                     Grid.Column="0"
                                     FontAttributes="Bold"
                                     FontSize="Medium"
-                                    HorizontalOptions="Center"
+                                    HorizontalOptions="Start"
                                     Text="Type"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="1"
                                     FontAttributes="Bold"
                                     FontSize="Medium"
-                                    HorizontalOptions="Center"
+                                    HorizontalOptions="Start"
                                     Text="Price"
                                     VerticalOptions="Center" />
                                 <Label
                                     Grid.Column="2"
                                     FontAttributes="Bold"
                                     FontSize="Medium"
-                                    HorizontalOptions="Center"
+                                    HorizontalOptions="Start"
                                     Text="Quantity"
                                     VerticalOptions="Center" />
                             </Grid>
@@ -108,19 +141,20 @@
                                     <Grid
                                         ColumnDefinitions="*,*,*"
                                         ColumnSpacing="30"
-                                        HorizontalOptions="Center"
                                         RowDefinitions="*,*,*,*,*">
 
                                         <Label
                                             Grid.Row="1"
                                             Grid.Column="0"
                                             FontSize="Small"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
                                             Text="{Binding ClassName}" />
                                         <Label
                                             Grid.Row="1"
                                             Grid.Column="1"
                                             FontSize="Small"
-                                            Text="{Binding ClassPrice, StringFormat='$ {0,2F}'}" />
+                                            Text="{Binding ClassPrice, StringFormat='$ {0:F2}'}" />
                                         <FlexLayout
                                             Grid.Row="1"
                                             Grid.Column="2"
@@ -133,9 +167,11 @@
                                                 VerticalTextAlignment="Center" />
                                             <Stepper
                                                 x:Name="stpVipCount"
+                                                AutomationId="{Binding ClassId}"
                                                 Increment="1"
-                                                Maximum="5"
-                                                Minimum="0" />
+                                                Maximum="{Binding ClassMaxQuantity}"
+                                                Minimum="0"
+                                                ValueChanged="OnClickTicketQuantityUpdate" />
                                         </FlexLayout>
                                     </Grid>
                                 </DataTemplate>
@@ -143,7 +179,7 @@
                         </VerticalStackLayout>
 
 
-                        <Button Text="Purchase Ticket" />
+                        <Button Clicked="OnClickPurchase" Text="Purchase Ticket" />
 
                     </VerticalStackLayout>
 

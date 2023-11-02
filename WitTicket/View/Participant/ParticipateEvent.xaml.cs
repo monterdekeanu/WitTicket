@@ -1,4 +1,6 @@
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using System.Diagnostics;
 using WitTicket.Model;
 
 namespace WitTicket.View.Participant;
@@ -6,18 +8,30 @@ namespace WitTicket.View.Participant;
 public partial class ParticipateEvent : ContentPage
 {
     public EventModel ActiveEvent { get; set; }
+    private int ParticipantID { get; set; }
 
-    public ParticipateEvent(EventModel activeEvent)
+    private List<TicketCartItem> TicketCartItems { get; set; } = new List<TicketCartItem>();
+    public ParticipateEvent(EventModel activeEvent, int participantID)
 	{
 		InitializeComponent();
         ActiveEvent = activeEvent;
-        BindingContext = this;
+        ParticipantID = participantID;
         InitializeImages();
-
+        BindingContext = this;
+        InitializeCart();
     }
 
+    private void InitializeCart()
+    {
+        foreach (EventClassModel eventClass in ActiveEvent.EventClasses)
+        {
+            TicketCartItems.Add(new TicketCartItem(eventClass, 0));
+        }
+    }
+    
     private void InitializeImages()
     {
+        List<String> images = new List<String>();
         if (ActiveEvent.Images.Count > 0)
         {
 
@@ -29,8 +43,10 @@ public partial class ParticipateEvent : ContentPage
                     image.WidthRequest = 400;
                     image.HeightRequest = 300;
                     image.Aspect = Aspect.AspectFill;
-                    imgContainer.Children.Add(image);
+                images.Add(Path.Combine(Environment.GetEnvironmentVariable("DATABASE_EVENT_IMAGES", EnvironmentVariableTarget.Process), fileName));    
+                //imgContainer.Children.Add(image);
             }
+            ActiveEvent.Images = images;    
         }
         else
         {
@@ -39,8 +55,20 @@ public partial class ParticipateEvent : ContentPage
             image.WidthRequest = 300;
             image.HeightRequest = 400;
             image.Aspect = Aspect.Fill;
-            imgContainer.Children.Add(image);
+            //imgContainer.Children.Add(image);
 
         }
+        
+    }
+    private void OnClickTicketQuantityUpdate(object sender, EventArgs e)
+    {
+        double count = ((Stepper)sender).Value;
+        TicketCartItems[Int32.Parse(((Stepper)sender).AutomationId)].UpdateQuantity((int)count);
+        //DisplayAlert("Ticket Quantity", $"You have selected {count} {ActiveEvent.EventClasses[ticketType].ClassName} tickets", "OK");
+    }
+
+    private async void OnClickPurchase(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new CheckoutView(ActiveEvent, TicketCartItems, ParticipantID));
     }
 }

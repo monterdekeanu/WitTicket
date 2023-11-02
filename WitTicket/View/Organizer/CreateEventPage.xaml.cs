@@ -60,7 +60,6 @@ public partial class CreateEventPage : ContentPage
         {
             PickerTitle = "Select an Image",
             FileTypes = FilePickerFileType.Images,
-            
         };
 
         var selectedMedia = await FilePicker.PickMultipleAsync(options);
@@ -224,11 +223,7 @@ public partial class CreateEventPage : ContentPage
             return false;
         }
 
-        if (!decimal.TryParse(txtPrice.Text, out decimal price) || price <= 0)
-        {
-            DisplayAlert("Error", "Invalid or empty Price value.", "OK");
-            return false;
-        }
+        
 
         if (!int.TryParse(capacityEntry.Text, out int totalCapacity) || totalCapacity <= 0)
         {
