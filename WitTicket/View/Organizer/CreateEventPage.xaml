@@ -235,8 +235,8 @@
                 </VerticalStackLayout>
 
                 <Button
+                    x:Name="btnAddEvent"
                     Margin="0,20,0,0"
-                    Clicked="OnClickAddEvent"
                     HorizontalOptions="Center"
                     Text="Add Event" />
             </VerticalStackLayout>

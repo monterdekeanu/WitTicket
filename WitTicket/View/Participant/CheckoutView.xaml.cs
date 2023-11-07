@@ -70,10 +70,17 @@ public partial class CheckoutView : ContentPage
             lblCreditCardNumberError.IsVisible = true;
         }
     }
-    private void OnClickCheckout(object sender, EventArgs e)
+    private async void OnClickCheckout(object sender, EventArgs e)
+    {
+        await DisplayCardProcessor();
+        OnSuccessCheckout();
+    }
+    private Task DisplayCardProcessor()
     {
         this.ShowPopup(new CreditCardProcessorView());
+        return Task.CompletedTask;
     }
+
     private bool ValidateCreditCardNumber(string creditCardNumber)
     {
         // Remove any spaces or non-numeric characters from the input
@@ -115,4 +122,22 @@ public partial class CheckoutView : ContentPage
         return sum % 10 == 0;
     }
  
+
+    private void OnSuccessCheckout()
+    {
+        //create ticket
+        //add ticket to ticket list
+        //save ticket list
+        ObservableCollection<TicketModel> tickets = new ObservableCollection<TicketModel>();
+        tickets = new Services.Connection().GetTicketList();
+        foreach(TicketCartItem item in CartItems)
+        {
+            for(int i = 0; i < item.Quantity; i++)
+            {
+                tickets.Add(new TicketModel(tickets.Count, ActiveEvent.EventId, ParticipantId, item.EventClass.EventId));
+            }
+        };
+        new Services.Connection().SaveTicketList(tickets);
+        DisplayAlert("Success", "Ticket(s) purchased successfully.", "OK");
+    }
 }

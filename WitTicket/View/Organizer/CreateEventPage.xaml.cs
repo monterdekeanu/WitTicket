@@ -11,13 +11,40 @@ public partial class CreateEventPage : ContentPage
     private List<string> selectedImageFileNames = new List<string>();
     public ObservableCollection<EventClassModel> EventClasses { get; set; }
     public UserModel activeUser = new();
+    public EventModel ActiveEvent { get; set; }
     public CreateEventPage(UserModel user)
     {
         InitializeComponent();
         EventClasses = new ObservableCollection<EventClassModel>();
+        btnAddEvent.Clicked += OnClickAddEvent;
         activeUser = user;
         BindingContext = this;
+    }
+
+    public CreateEventPage(UserModel user, EventModel activeEvent) //Update Event Initialization
+    {
+        InitializeComponent();
+        ActiveEvent = activeEvent;
+        EventClasses = ActiveEvent.EventClasses.ToObservableCollection<EventClassModel>();
+        activeUser = user;
         
+        InitializeActiveEvent();
+        BindingContext = this;
+
+    }
+    private void InitializeActiveEvent()
+    {
+        btnAddEvent.Clicked += OnClickSaveEvent;
+        btnAddEvent.Text = "Update Event";
+        capacityEntry.Text = ActiveEvent.TotalCapacity.ToString();
+        eventNameEntry.Text = ActiveEvent.Name;
+        startDatePicker.Date = ActiveEvent.StartDate.Date;
+        startTimePicker.Time = ActiveEvent.StartDate.TimeOfDay;
+        endDatePicker.Date = ActiveEvent.EndDate.Date;
+        endTimePicker.Time = ActiveEvent.EndDate.TimeOfDay;
+        cityEntry.Text = ActiveEvent.City;
+        Street.Text = ActiveEvent.Street;
+        txtDescription.Text = ActiveEvent.Description;
     }
     private void UpdateCapacity()
     {
@@ -136,7 +163,7 @@ public partial class CreateEventPage : ContentPage
             );
             if (events.Count > 0)
             {
-                 eventModel.EventId= events.Last().EventId + 1;
+                 eventModel.EventId= events.Last().EventId + 1; //updated eventID here
             }
 
             
@@ -160,6 +187,57 @@ public partial class CreateEventPage : ContentPage
             (new Services.Connection()).AddEvents(events);
             await DisplayAlert("Success", "Event created successfully.", "OK");
             await Navigation.PushAsync(new DashboardOrganizer(activeUser));
+        }
+    }
+    private async void OnClickSaveEvent(object sender, EventArgs e)
+    {
+        if (ValidateInput())
+        {
+            ObservableCollection<EventModel> events = (new Services.Connection()).GetEventsList();
+
+            EventModel eventModel = new EventModel(
+                eventClasses: EventClasses.ToList<EventClassModel>(),
+                eventId: ActiveEvent.EventId, // You can set this to an appropriate value GET LIST FIRST THEN UPDATE AS IT AAAAAAAAAAAA TABANG MGA LANGIT
+                name: eventNameEntry.Text,
+                city: cityEntry.Text,
+                street: Street.Text,
+                startDate: startDatePicker.Date + startTimePicker.Time,
+                endDate: endDatePicker.Date + endTimePicker.Time,
+                price: EventClasses[0].ClassPrice,//decimal.Parse(priceEntry.Text),
+                totalCapacity: int.Parse(capacityEntry.Text),
+                organizer: activeUser.FirstName + " " + activeUser.LastName, // Replace with the actual organizer's name
+                organizerId: activeUser.AccountId,
+                description: txtDescription.Text
+            );
+            eventModel.Images = ActiveEvent.Images;
+
+            await SaveImagesToResourcesAsync();
+
+
+            // Add the selected images to the event
+            //foreach (string fileName in selectedImageFileNames)
+            //{
+            //    eventModel.AddImage(fileName);
+            //}
+
+            // Save the event to the list of events
+            for(int i = 0; i < events.Count; i++)
+            {
+                if (events[i].EventId == ActiveEvent.EventId)
+                {
+                    events[i] = eventModel;
+                    break;
+                }
+            }
+            
+
+            (new Services.Connection()).AddEvents(events);
+            await DisplayAlert("Success", "Event created successfully.", "OK");
+            await Navigation.PushAsync(new DashboardOrganizer(activeUser));
+            // Clear the list of selected image file names and data
+
+            selectedImageFileNames.Clear();
+            selectedImagesData.Clear();
         }
     }
     private async Task SaveImagesToResourcesAsync()
