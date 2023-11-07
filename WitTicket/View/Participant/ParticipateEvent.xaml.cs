@@ -63,12 +63,19 @@ public partial class ParticipateEvent : ContentPage
     private void OnClickTicketQuantityUpdate(object sender, EventArgs e)
     {
         double count = ((Stepper)sender).Value;
-        TicketCartItems[Int32.Parse(((Stepper)sender).AutomationId)].UpdateQuantity((int)count);
+        try {
+            TicketCartItems[Int32.Parse(((Stepper)sender).AutomationId)].UpdateQuantity((int)count);
+        }
+        catch(Exception ex) { 
+        DisplayAlert("No Tickets Ordered", "You didn't select any ticket(s) yet. Select " + TicketCartItems.Count, "OK");
+        }
+        
         //DisplayAlert("Ticket Quantity", $"You have selected {count} {ActiveEvent.EventClasses[ticketType].ClassName} tickets", "OK");
     }
 
     private async void OnClickPurchase(object sender, EventArgs e)
     {
+        
         await Navigation.PushAsync(new CheckoutView(ActiveEvent, TicketCartItems, ParticipantID));
     }
 }

@@ -1,3 +1,4 @@
+using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Maui.Storage;
 using System.Collections.ObjectModel;
 using WitTicket.Model;
@@ -6,7 +7,6 @@ namespace WitTicket.View.Organizer;
 
 public partial class CreateEventPage : ContentPage
 {
-    private int eventClassCount = 0;
     private List<byte[]> selectedImagesData = new List<byte[]>(); // Store selected images in a list
     private List<string> selectedImageFileNames = new List<string>();
     public ObservableCollection<EventClassModel> EventClasses { get; set; }
@@ -35,11 +35,10 @@ public partial class CreateEventPage : ContentPage
         }
         try
         {
-            EventClasses.Add(new EventClassModel(eventClassCount, txtClassName.Text, double.Parse(txtPrice.Text), Int32.Parse(txtQuantity.Text), eventId));
+            EventClasses.Add(new EventClassModel(EventClasses.Count, txtClassName.Text, double.Parse(txtPrice.Text), Int32.Parse(txtQuantity.Text), eventId));
             txtClassName.Text = "";
             txtPrice.Text = "";
             txtQuantity.Text = "";
-            eventClassCount++;
             UpdateCapacity();
         }
         catch(Exception err)
@@ -51,6 +50,10 @@ public partial class CreateEventPage : ContentPage
     private void OnClickRemoveClass (object sender, EventArgs e)
     {
         EventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
+        for(int i = 0; i < EventClasses.Count; i++) //update index
+        {
+            EventClasses[i].ClassId = i;
+        }
         UpdateCapacity();
     }
     private async void OnClickUploadImage(object sender, EventArgs e)

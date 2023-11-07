@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup
+    x:Class="WitTicket.View.Participant.CreditCardProcessorView"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+    CanBeDismissedByTappingOutsideOfPopup="False">
+    <VerticalStackLayout
+        BackgroundColor="White"
+        HeightRequest="200"
+        HorizontalOptions="Center"
+        VerticalOptions="Center">
+        <Label
+            x:Name="lblNotice"
+            HorizontalOptions="Center"
+            Text="Your Transaction is being processed.."
+            VerticalOptions="Center" />
+        <ActivityIndicator
+            x:Name="loadingIndicator"
+            IsRunning="True"
+            Color="Blue" />
+        <Label
+            x:Name="lblMerchantNotice"
+            HorizontalOptions="Center"
+            IsVisible="false"
+            Text="Returning to merchant in.."
+            VerticalOptions="Center" />
+        <Label
+            x:Name="lblTimer"
+            HorizontalOptions="Center"
+            IsVisible="false"
+            Text="5"
+            VerticalOptions="Center" />
+
+    </VerticalStackLayout>
+</mct:Popup>

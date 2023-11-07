@@ -3,6 +3,7 @@
     x:Class="WitTicket.View.Participant.CheckoutView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:WitTicket.Model"
     Title="">
     <ContentPage.Resources>
         <Style TargetType="Entry">
@@ -13,20 +14,37 @@
             <Setter Property="FontSize" Value="Small" />
             <Setter Property="FontAttributes" Value="Bold" />
         </Style>
+
+        <Style x:Key="lblRegular" TargetType="Label">
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="FontAttributes" Value="None" />
+        </Style>
     </ContentPage.Resources>
     <ScrollView Margin="0,40,0,0" VerticalOptions="Start">
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
             <VerticalStackLayout Margin="0,0,20,0">
                 <VerticalStackLayout>
-                    <Label Text="Quick checkout with Amazon or Paypal:" />
+                    <Label Text="Quick checkout with GCash or Paypal:" />
                     <HorizontalStackLayout>
-                        <Button Text="Amazon" />
+                        <Button Text="GCash" />
                         <Button Text="Paypal" />
                     </HorizontalStackLayout>
                 </VerticalStackLayout>
                 <VerticalStackLayout>
                     <Label Text="Card Number" />
-                    <Entry x:Name="txtCardNumber" Placeholder="**** **** **** ****" />
+                    <Entry
+                        x:Name="txtCardNumber"
+                        MaxLength="19"
+                        Placeholder="**** **** **** ****"
+                        TextChanged="OnChangeCreditCardNumber" />
+                    <Label
+                        x:Name="lblCreditCardNumberError"
+                        FontAttributes="None"
+                        FontSize="10"
+                        HorizontalTextAlignment="End"
+                        IsVisible="false"
+                        Text="Invalid Card Number"
+                        TextColor="Red" />
                     <HorizontalStackLayout>
                         <VerticalStackLayout Margin="0,0,20,0">
                             <Label Text="Expiration Date" />
@@ -42,18 +60,89 @@
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
 
-                    <Button Text="CHECKOUT" />
+                    <Button Clicked="OnClickCheckout" Text="CHECKOUT" />
                 </VerticalStackLayout>
             </VerticalStackLayout>
             <VerticalStackLayout>
-                <FlexLayout JustifyContent="SpaceBetween">
-                    <Label Text="Order Summary" />
-                    <Button Text="Edit" />
-
+                <FlexLayout
+                    BackgroundColor="#293453"
+                    JustifyContent="SpaceBetween"
+                    VerticalOptions="Center">
+                    <VerticalStackLayout Padding="10,0,0,0" VerticalOptions="Center">
+                        <Image
+                            HeightRequest="64"
+                            Source="witticket_logo.png"
+                            WidthRequest="64" />
+                    </VerticalStackLayout>
+                    <HorizontalStackLayout
+                        Padding="20"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center">
+                        <Label
+                            Margin="0,0,10,0"
+                            Text="ORDER SUMMARY"
+                            TextColor="White"
+                            VerticalOptions="Center" />
+                        <Button
+                            BackgroundColor="Transparent"
+                            Clicked="OnClickEdit"
+                            FontAttributes="Italic"
+                            Text="Edit" />
+                    </HorizontalStackLayout>
                 </FlexLayout>
+                <Grid Padding="0,10,0,10" BackgroundColor="White">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="254" />
+                        <ColumnDefinition Width="100" />
+                        <ColumnDefinition Width="100" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        FontSize="Micro"
+                        HorizontalTextAlignment="Center"
+                        Text="Ticket Type" />
+                    <Label
+                        Grid.Column="1"
+                        FontSize="Micro"
+                        HorizontalTextAlignment="Center"
+                        Text="Quantity" />
+                    <Label
+                        Grid.Column="2"
+                        FontSize="Micro"
+                        HorizontalTextAlignment="Center"
+                        Text="Price" />
+                </Grid>
+                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CartItems}">
+
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="model:TicketCartItem">
+                            <Grid Margin="0,0,0,10" BackgroundColor="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="254" />
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    Style="{StaticResource lblRegular}"
+                                    Text="{Binding EventClass.ClassName}" />
+                                <Label
+                                    Grid.Column="1"
+                                    HorizontalTextAlignment="Center"
+                                    Style="{StaticResource lblRegular}"
+                                    Text="{Binding Quantity}" />
+                                <Label
+                                    Grid.Column="2"
+                                    HorizontalTextAlignment="End"
+                                    Style="{StaticResource lblRegular}"
+                                    Text="{Binding TotalPrice, StringFormat='$ {0:F2}'}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
                 <FlexLayout JustifyContent="SpaceBetween">
                     <Label Text="Subtotal" />
-                    <Label Text="$0.00" />
+                    <Label x:Name="lblSubtotal" Text="$0.00" />
                 </FlexLayout>
                 <VerticalStackLayout>
                     <Label Text="Have a promotion code? Enter here:" />
@@ -64,7 +153,10 @@
                 </VerticalStackLayout>
                 <FlexLayout JustifyContent="SpaceBetween">
                     <Label FontSize="Large" Text="Total" />
-                    <Label FontSize="Large" Text="$0.00" />
+                    <Label
+                        x:Name="lblTotal"
+                        FontSize="Large"
+                        Text="$0.00" />
                 </FlexLayout>
             </VerticalStackLayout>
         </HorizontalStackLayout>
