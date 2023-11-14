@@ -3,6 +3,7 @@
     x:Class="WitTicket.View.Participant.DashboardParticipant"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:WitTicket.Model"
     Title="">
     <Grid>
         <Grid.RowDefinitions>
@@ -27,12 +28,29 @@
                 FontSize="Header"
                 Text="WitTicket"
                 TextColor="#ecf0f1" />
-            <HorizontalStackLayout Padding="10">
+            <VerticalStackLayout Padding="10">
                 <SearchBar
+                    x:Name="sbParticipant"
                     BackgroundColor="#ecf0f1"
                     HeightRequest="24"
+                    TextChanged="OnSearchBarTextChange"
                     WidthRequest="258" />
-            </HorizontalStackLayout>
+                <VerticalStackLayout
+                    x:Name="lvEvents"
+                    BindableLayout.ItemsSource="{Binding searchEvents}"
+                    HeightRequest="200"
+                    WidthRequest="254">
+                    <BindableLayout.ItemTemplate BackgroundColor="White">
+                        <DataTemplate x:DataType="vm:EventModel">
+                            <FlexLayout BackgroundColor="White">
+
+                                <Label Text="{Binding Name}" />
+
+                            </FlexLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
         </FlexLayout>
         <ScrollView
             Grid.Row="1"
