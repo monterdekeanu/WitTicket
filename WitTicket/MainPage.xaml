@@ -37,16 +37,24 @@
                         Text="Sign Up" />
                 </HorizontalStackLayout>
             </FlexLayout>
-            <Label
-                FontAttributes="Bold"
-                FontSize="64"
-                HorizontalTextAlignment="Center"
-                Scale="1.2"
-                Text="Your All-in One Ticketing Solution"
-                VerticalTextAlignment="Center"
-                WidthRequest="550" />
+
+            <VerticalStackLayout>
+                <Image
+                    Margin="0,0,0,40"
+                    HeightRequest="128"
+                    Source="witticket_logo.png"
+                    WidthRequest="128" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="64"
+                    HorizontalTextAlignment="Center"
+                    Scale="1.2"
+                    Text="Your All-in One Ticketing Solution"
+                    VerticalTextAlignment="Center"
+                    WidthRequest="550" />
+            </VerticalStackLayout>
             <Button
-                Margin="0,0,0,40"
+                Margin="0,0,0,80"
                 FontAttributes="Bold"
                 FontSize="Large"
                 Text="Book Tickets"

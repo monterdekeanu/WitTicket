@@ -96,4 +96,15 @@ public partial class DashboardParticipant : ContentPage
         searchEvents = events.Where(x => x.Name.ToLower().Contains(((SearchBar)sender).Text.ToLower())).ToObservableCollection<EventModel>();
         OnPropertyChanged(nameof(searchEvents));
     }
+    private async void OnClickSearch(object sender, EventArgs e)
+    {
+        Debug.WriteLine(((Frame)sender).AutomationId);
+        int index = Int32.Parse(((Frame)sender).AutomationId);
+        await Navigation.PushAsync(new ParticipateEvent(events[index], ActiveUser.AccountId));
+    }
+
+    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    {
+
+    }
 }
