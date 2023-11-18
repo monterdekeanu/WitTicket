@@ -14,11 +14,13 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
+
         <FlexLayout
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
-            BackgroundColor="#3498db"
+            BackgroundColor="Transparent"
+            HeightRequest="80"
             HorizontalOptions="FillAndExpand"
             JustifyContent="SpaceBetween"
             VerticalOptions="CenterAndExpand">
@@ -62,17 +64,61 @@
             Grid.Row="1"
             Grid.Column="0"
             Grid.ColumnSpan="2"
+            Margin="0,-80,0,0"
             ZIndex="-2">
             <VerticalStackLayout HorizontalOptions="Start">
                 <FlexLayout
-                    Margin="30,10,30,10"
+                    Direction="Column"
                     HorizontalOptions="FillAndExpand"
                     JustifyContent="SpaceBetween">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Image
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Aspect="AspectFill"
+                            HeightRequest="400"
+                            Source="background_stadium.png" />
+                        <VerticalStackLayout
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="0,0,0,0"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Image HeightRequest="100" Source="witticket_logo.png" />
+                            <Label
+                                FontAttributes="Bold"
+                                FontSize="Header"
+                                Text="Find your event"
+                                TextColor="white" />
+                            <Line
+                                Margin="0,0,0,10"
+                                BackgroundColor="White"
+                                HeightRequest="2"
+                                WidthRequest="300" />
+                            <Label
+                                Padding="10,0"
+                                BackgroundColor="#DAA520"
+                                FontAttributes="Italic"
+                                FontSize="Micro"
+                                HorizontalOptions="Center"
+                                Text="Get your fast ticket"
+                                TextColor="white" />
+
+                        </VerticalStackLayout>
+
+
+                    </Grid>
+
                     <Label
+                        Margin="40,0,0,0"
                         FontAttributes="Bold"
                         FontSize="Header"
                         Text="BROWSE"
-                        TextColor="#3498db" />
+                        TextColor="#001F3F" />
                 </FlexLayout>
                 <FlexLayout
                     x:Name="flEventsContainer"
