@@ -6,18 +6,19 @@
         {
             InitializeComponent();
             InitializeDirectory();
+            vslMain.FadeTo(1, 2000,Easing.SinInOut);
         }
 
         private void OnClickLogin(object sender, EventArgs e)
         {
             //Navigation.PushAsync(new LoginPage());
-            Shell.Current.GoToAsync("LoginPage");
+            Shell.Current.GoToAsync("LoginPage",false);
         }
 
         private void OnClickSignUp(object sender, EventArgs e)
         {
             //Navigation.PushAsync(new SignUpPage());
-            Shell.Current.GoToAsync("Registration");
+            Shell.Current.GoToAsync("Registration",false);
         }
 
 
