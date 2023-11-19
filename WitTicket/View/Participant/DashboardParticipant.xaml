@@ -30,33 +30,43 @@
                 FontSize="Header"
                 Text="WitTicket"
                 TextColor="#ecf0f1" />
-            <VerticalStackLayout Padding="10">
-                <SearchBar
-                    x:Name="sbParticipant"
-                    BackgroundColor="#ecf0f1"
-                    HeightRequest="24"
-                    TextChanged="OnSearchBarTextChange"
-                    WidthRequest="258" />
-                <VerticalStackLayout
-                    x:Name="lvEvents"
-                    BindableLayout.ItemsSource="{Binding searchEvents}"
-                    HeightRequest="200"
-                    WidthRequest="254">
-                    <BindableLayout.ItemTemplate BackgroundColor="White">
-                        <DataTemplate x:DataType="vm:EventModel">
-                            <VerticalStackLayout BackgroundColor="White" ZIndex="2">
-                                <Frame
-                                    AutomationId="{Binding EventId}"
-                                    BackgroundColor="White"
-                                    CornerRadius="10">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="OnClickSearch" />
-                                    </Frame.GestureRecognizers>
-                                    <Label Text="{Binding Name}" />
-                                </Frame>
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
+            <VerticalStackLayout Padding="20,10,20,20">
+
+                <ImageButton
+                    x:Name="imgProfile"
+                    BackgroundColor="Transparent"
+                    Clicked="OnClickProfileIcon"
+                    HeightRequest="50"
+                    Source="witticket_logo.png" />
+                <VerticalStackLayout x:Name="vslMenu" Opacity="0">
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="#ecf0f1"
+                        CornerRadius="0"
+                        Text="Profile">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                        </Button.GestureRecognizers>
+                    </Button>
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="#ecf0f1"
+                        CornerRadius="0"
+                        Text="View Tickets">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                        </Button.GestureRecognizers>
+                    </Button>
+                    <Button
+                        BackgroundColor="Transparent"
+                        BorderColor="#ecf0f1"
+                        Clicked="OnClickLogout"
+                        CornerRadius="0"
+                        Text="Logout">
+                        <Button.GestureRecognizers>
+                            <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                        </Button.GestureRecognizers>
+                    </Button>
                 </VerticalStackLayout>
             </VerticalStackLayout>
         </FlexLayout>
@@ -80,7 +90,7 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Aspect="AspectFill"
-                            HeightRequest="400"
+                            HeightRequest="350"
                             Source="background_stadium.png" />
                         <VerticalStackLayout
                             Grid.Row="0"
@@ -112,9 +122,30 @@
 
 
                     </Grid>
-
+                    <HorizontalStackLayout
+                        Margin="0,-20,0,0"
+                        Padding="10"
+                        BackgroundColor="#001F3F"
+                        HorizontalOptions="Center"
+                        Opacity="0.9">
+                        <Entry
+                            x:Name="sbParticipant"
+                            Margin="0,0,0,0"
+                            BackgroundColor="#ecf0f1"
+                            HeightRequest="24"
+                            TextChanged="OnSearchBarTextChange"
+                            WidthRequest="258" />
+                        <Button
+                            Margin="10,0,0,0"
+                            BackgroundColor="#DAA520"
+                            BorderColor="#DAA520"
+                            BorderWidth="1"
+                            CornerRadius="0"
+                            FontAttributes="Bold"
+                            Text="Find Event" />
+                    </HorizontalStackLayout>
                     <Label
-                        Margin="40,0,0,0"
+                        Margin="40,10,0,0"
                         FontAttributes="Bold"
                         FontSize="Header"
                         Text="BROWSE"
