@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="WitTicket.View.Participant.DashboardParticipant"
+    x:Class="WitTicket.View.Participant.TicketView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:WitTicket.Model"
     Title="">
     <Grid>
         <Grid.RowDefinitions>
@@ -91,72 +90,50 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Aspect="AspectFill"
-                            HeightRequest="350"
+                            HeightRequest="300"
                             Source="background_stadium.png" />
-                        <VerticalStackLayout
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                            <Image HeightRequest="100" Source="witticket_logo.png" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="Header"
-                                Text="Find your event"
-                                TextColor="white" />
-                            <Line
-                                Margin="0,0,0,10"
-                                BackgroundColor="White"
-                                HeightRequest="2"
-                                WidthRequest="300" />
-                            <Label
-                                Padding="10,0"
-                                BackgroundColor="#DAA520"
-                                FontAttributes="Italic"
-                                FontSize="Micro"
-                                HorizontalOptions="Center"
-                                Text="Get your fast ticket"
-                                TextColor="white" />
-
-                        </VerticalStackLayout>
 
 
                     </Grid>
-                    <HorizontalStackLayout
-                        Margin="0,-20,0,0"
-                        Padding="10"
-                        BackgroundColor="#001F3F"
-                        HorizontalOptions="Center"
-                        Opacity="0.9">
-                        <Entry
-                            x:Name="sbParticipant"
-                            Margin="0,0,0,0"
-                            BackgroundColor="#ecf0f1"
-                            HeightRequest="24"
-                            TextChanged="OnSearchBarTextChange"
-                            WidthRequest="258" />
-                        <Button
-                            Margin="10,0,0,0"
-                            BackgroundColor="#DAA520"
-                            BorderColor="#DAA520"
-                            BorderWidth="1"
-                            CornerRadius="0"
-                            FontAttributes="Bold"
-                            Text="Find Event" />
-                    </HorizontalStackLayout>
-                    <Label
-                        Margin="40,10,0,0"
-                        FontAttributes="Bold"
-                        FontSize="Header"
-                        Text="BROWSE"
-                        TextColor="#001F3F" />
+
                 </FlexLayout>
-                <FlexLayout
-                    x:Name="flEventsContainer"
-                    Margin="100,0,100,0"
-                    HorizontalOptions="FillAndExpand"
-                    Wrap="Wrap" />
+
+                <HorizontalStackLayout>
+                    <VerticalStackLayout Margin="50,-150,0,0" HorizontalOptions="Start">
+                        <Image
+                            HeightRequest="240"
+                            Source="witticket_logo.png"
+                            WidthRequest="240" />
+                        <Frame Margin="0,-40,0,0">
+                            <Label
+                                FontSize="Micro"
+                                HorizontalTextAlignment="Start"
+                                Text="{Binding ActiveUser.FirstName, StringFormat='First Name: {0}'}" />
+                        </Frame>
+                    </VerticalStackLayout>
+                    <FlexLayout
+                        x:Name="flEventsContainer"
+                        Margin="100,50,100,0"
+                        Direction="Row"
+                        HorizontalOptions="FillAndExpand"
+                        Wrap="Wrap">
+                        <Frame>
+                            <HorizontalStackLayout>
+                                <Label Text="Name:" />
+                                <Label Text="Date" />
+                                <Label Text="Ticket #:" />
+                                <Label Text="Event Name:" />
+                                <Label Text="Type:" />
+                                <Image
+                                    HeightRequest="64"
+                                    Source="witticket_logo.png"
+                                    WidthRequest="64" />
+                            </HorizontalStackLayout>
+                        </Frame>
+
+                    </FlexLayout>
+                </HorizontalStackLayout>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>

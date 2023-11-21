@@ -168,4 +168,8 @@ public partial class DashboardParticipant : ContentPage
     {
         await Navigation.PopToRootAsync();
     }
+    private async void OnClickViewTicketsBtn(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new TicketView(ActiveUser));
+    }
 }
