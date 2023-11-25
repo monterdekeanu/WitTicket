@@ -134,7 +134,7 @@ public partial class CheckoutView : ContentPage
         {
             for(int i = 0; i < item.Quantity; i++)
             {
-                tickets.Add(new TicketModel(tickets.Count, ActiveEvent.EventId, ParticipantId, item.EventClass.EventId));
+                tickets.Add(new TicketModel(tickets.Count, ActiveEvent.EventId, ParticipantId, item.EventClass.ClassId));
             }
         };
         new Services.Connection().SaveTicketList(tickets);

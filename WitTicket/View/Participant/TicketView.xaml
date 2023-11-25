@@ -24,6 +24,7 @@
             JustifyContent="SpaceBetween"
             VerticalOptions="CenterAndExpand">
             <Label
+                x:Name="lblTitle"
                 Padding="20,10,20,20"
                 FontAttributes="Bold"
                 FontSize="Header"
@@ -52,11 +53,9 @@
                         BorderColor="#ecf0f1"
                         Clicked="OnClickViewTicketsBtn"
                         CornerRadius="0"
-                        Text="View Tickets">
-                        <Button.GestureRecognizers>
-                            <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
-                        </Button.GestureRecognizers>
-                    </Button>
+                        IsEnabled="False"
+                        Text="View Tickets"
+                        TextColor="#DAA520" />
                     <Button
                         BackgroundColor="Transparent"
                         BorderColor="#ecf0f1"
@@ -98,40 +97,27 @@
 
                 </FlexLayout>
 
-                <HorizontalStackLayout>
+                <HorizontalStackLayout HorizontalOptions="Center">
                     <VerticalStackLayout Margin="50,-150,0,0" HorizontalOptions="Start">
+
                         <Image
                             HeightRequest="240"
                             Source="witticket_logo.png"
                             WidthRequest="240" />
                         <Frame Margin="0,-40,0,0">
+
                             <Label
                                 FontSize="Micro"
                                 HorizontalTextAlignment="Start"
                                 Text="{Binding ActiveUser.FirstName, StringFormat='First Name: {0}'}" />
                         </Frame>
-                    </VerticalStackLayout>
-                    <FlexLayout
-                        x:Name="flEventsContainer"
-                        Margin="100,50,100,0"
-                        Direction="Row"
-                        HorizontalOptions="FillAndExpand"
-                        Wrap="Wrap">
-                        <Frame>
-                            <HorizontalStackLayout>
-                                <Label Text="Name:" />
-                                <Label Text="Date" />
-                                <Label Text="Ticket #:" />
-                                <Label Text="Event Name:" />
-                                <Label Text="Type:" />
-                                <Image
-                                    HeightRequest="64"
-                                    Source="witticket_logo.png"
-                                    WidthRequest="64" />
-                            </HorizontalStackLayout>
-                        </Frame>
 
-                    </FlexLayout>
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        x:Name="ticketContainer"
+                        Margin="100,20,100,0"
+                        HorizontalOptions="CenterAndExpand" />
                 </HorizontalStackLayout>
 
             </VerticalStackLayout>

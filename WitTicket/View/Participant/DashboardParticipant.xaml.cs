@@ -24,6 +24,7 @@ public partial class DashboardParticipant : ContentPage
 
     }
 
+    
     public async void InitializeEvents(ObservableCollection<EventModel> obsCollectionEvents)
     {
         flEventsContainer.Children.Clear();

@@ -61,6 +61,7 @@
 		<PackageReference Include="Betalgo.OpenAI.Utilities" Version="7.0.3" />
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="QRCoder" Version="1.4.3" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 	</ItemGroup>
 
