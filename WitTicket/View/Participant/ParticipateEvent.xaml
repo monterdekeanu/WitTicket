@@ -20,173 +20,288 @@
                 Grid.Row="0"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                BackgroundColor="#3498db"
+                BackgroundColor="Transparent"
+                HeightRequest="80"
                 HorizontalOptions="FillAndExpand"
                 JustifyContent="SpaceBetween"
                 VerticalOptions="CenterAndExpand">
                 <Label
+                    x:Name="lblTitle"
                     Padding="20,10,20,20"
                     FontAttributes="Bold"
                     FontSize="Header"
                     Text="WitTicket"
                     TextColor="#ecf0f1" />
-                <HorizontalStackLayout Padding="10">
-                    <SearchBar
-                        BackgroundColor="#ecf0f1"
-                        HeightRequest="24"
-                        WidthRequest="258" />
-                </HorizontalStackLayout>
+                <VerticalStackLayout Padding="20,10,20,20">
+
+                    <ImageButton
+                        x:Name="imgProfile"
+                        BackgroundColor="Transparent"
+                        Clicked="OnClickProfileIcon"
+                        HeightRequest="50"
+                        Source="witticket_logo.png" />
+                    <VerticalStackLayout x:Name="vslMenu" Opacity="0">
+                        <Button
+                            x:Name="btnProfile"
+                            BackgroundColor="Transparent"
+                            BorderColor="#ecf0f1"
+                            CornerRadius="0"
+                            Text="Profile">
+                            <Button.GestureRecognizers>
+                                <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                            </Button.GestureRecognizers>
+                        </Button>
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#ecf0f1"
+                            Clicked="OnClickViewTicketsBtn"
+                            CornerRadius="0"
+                            Text="View Tickets">
+                            <Button.GestureRecognizers>
+                                <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                            </Button.GestureRecognizers>
+                        </Button>
+                        <Button
+                            BackgroundColor="Transparent"
+                            BorderColor="#ecf0f1"
+                            Clicked="OnClickLogout"
+                            CornerRadius="0"
+                            Text="Logout">
+                            <Button.GestureRecognizers>
+                                <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
+                            </Button.GestureRecognizers>
+                        </Button>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
             </FlexLayout>
-            <VerticalStackLayout
+            <ScrollView
                 Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
-                Padding="0,40,0,0"
-                HorizontalOptions="Center">
+                Margin="0,-80,0,0"
+                ZIndex="-2">
 
-                <HorizontalStackLayout>
-                    <VerticalStackLayout>
-                        <CarouselView
-                            x:Name="cvImgs"
-                            IndicatorView="indicatorView"
-                            ItemsSource="{Binding ActiveEvent.Images}"
-                            Loop="False"
-                            PeekAreaInsets="30"
-                            VerticalScrollBarVisibility="Never"
-                            WidthRequest="400">
-                            <CarouselView.ItemsLayout>
-                                <LinearItemsLayout
-                                    Orientation="Horizontal"
-                                    SnapPointsAlignment="Center"
-                                    SnapPointsType="Mandatory" />
-                            </CarouselView.ItemsLayout>
-
-                            <CarouselView.ItemTemplate>
-                                <DataTemplate>
-                                    <VerticalStackLayout>
-                                        <Frame
-                                            Margin="20"
-                                            BorderColor="DarkGray"
-                                            CornerRadius="5"
-                                            HasShadow="True"
-                                            HeightRequest="300"
-                                            HorizontalOptions="Center"
-                                            VerticalOptions="CenterAndExpand">
-                                            <StackLayout>
-                                                <Image HeightRequest="300" WidthRequest="300">
-                                                    <Image.Source>
-                                                        <FileImageSource File="{Binding}" />
-                                                    </Image.Source>
-                                                </Image>
-                                            </StackLayout>
-                                        </Frame>
-                                    </VerticalStackLayout>
-                                </DataTemplate>
-                            </CarouselView.ItemTemplate>
-                        </CarouselView>
-                        <IndicatorView
-                            x:Name="indicatorView"
-                            HorizontalOptions="Center"
-                            IndicatorColor="LightGray"
-                            SelectedIndicatorColor="DarkGray" />
-                    </VerticalStackLayout>
-
-
-                    <VerticalStackLayout Margin="40,0,0,0" MaximumWidthRequest="700">
-
-                        <Label
-                            Margin="0,0,0,20"
-                            FontAttributes="Bold"
-                            FontSize="Large"
-                            HorizontalOptions="Center"
-                            Text="{Binding ActiveEvent.Name}"
-                            VerticalOptions="Center" />
-                        <Editor IsReadOnly="True" Text="{Binding ActiveEvent.Description}" />
-                        <Label
-                            FontAttributes="Bold"
-                            FontSize="Medium"
-                            HorizontalOptions="Center"
-                            Text="Order Ticket(s):"
-                            VerticalOptions="Center" />
-                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActiveEvent.EventClasses}">
-                            <Grid
-                                ColumnDefinitions="*,*,*"
-                                ColumnSpacing="30"
+                <VerticalStackLayout>
+                    <FlexLayout
+                        Direction="Column"
+                        HorizontalOptions="FillAndExpand"
+                        JustifyContent="SpaceBetween">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Image
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Aspect="AspectFill"
+                                HeightRequest="350"
+                                Source="background_stadium.png" />
+                            <VerticalStackLayout
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,0,0"
                                 HorizontalOptions="Center"
-                                RowDefinitions="*,*,*,*,*">
+                                VerticalOptions="Center">
+                                <Image HeightRequest="100" Source="witticket_logo.png" />
                                 <Label
-                                    Grid.Column="0"
                                     FontAttributes="Bold"
-                                    FontSize="Medium"
-                                    HorizontalOptions="Start"
-                                    Text="Type"
-                                    VerticalOptions="Center" />
+                                    FontSize="Header"
+                                    Text="Book a ticket"
+                                    TextColor="white" />
+                                <Line
+                                    Margin="0,0,0,10"
+                                    BackgroundColor="White"
+                                    HeightRequest="2"
+                                    WidthRequest="300" />
                                 <Label
-                                    Grid.Column="1"
-                                    FontAttributes="Bold"
-                                    FontSize="Medium"
-                                    HorizontalOptions="Start"
-                                    Text="Price"
-                                    VerticalOptions="Center" />
-                                <Label
-                                    Grid.Column="2"
-                                    FontAttributes="Bold"
-                                    FontSize="Medium"
-                                    HorizontalOptions="Start"
-                                    Text="Quantity"
-                                    VerticalOptions="Center" />
-                            </Grid>
-                            <BindableLayout.ItemTemplate>
-                                <DataTemplate x:DataType="model:EventClassModel">
-                                    <Grid
-                                        ColumnDefinitions="*,*,*"
-                                        ColumnSpacing="30"
-                                        RowDefinitions="*,*,*,*,*">
+                                    Padding="10,0"
+                                    BackgroundColor="#DAA520"
+                                    FontAttributes="Italic"
+                                    FontSize="Micro"
+                                    HorizontalOptions="Center"
+                                    Text="Get your ticket fast!"
+                                    TextColor="white" />
 
-                                        <Label
-                                            Grid.Row="1"
-                                            Grid.Column="0"
-                                            FontSize="Small"
-                                            HorizontalOptions="Start"
-                                            HorizontalTextAlignment="Start"
-                                            Text="{Binding ClassName}" />
-                                        <Label
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            FontSize="Small"
-                                            Text="{Binding ClassPrice, StringFormat='$ {0:F2}'}" />
-                                        <FlexLayout
-                                            Grid.Row="1"
-                                            Grid.Column="2"
-                                            JustifyContent="SpaceEvenly"
-                                            VerticalOptions="End">
-                                            <Label
-                                                x:Name="lblVipCount"
-                                                FontAttributes="Bold"
-                                                Text="{Binding Source={x:Reference stpVipCount}, Path=Value}"
-                                                VerticalTextAlignment="Center" />
-                                            <Stepper
-                                                x:Name="stpVipCount"
-                                                AutomationId="{Binding ClassId}"
-                                                Increment="1"
-                                                Maximum="{Binding ClassMaxQuantity}"
-                                                Minimum="0"
-                                                ValueChanged="OnClickTicketQuantityUpdate" />
-                                        </FlexLayout>
-                                    </Grid>
-                                </DataTemplate>
-                            </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
+
+
+                        </Grid>
+                    </FlexLayout>
+                    <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+                        <VerticalStackLayout>
+                            <CarouselView
+                                x:Name="cvImgs"
+                                IndicatorView="indicatorView"
+                                ItemsSource="{Binding ActiveEvent.Images}"
+                                Loop="False"
+                                PeekAreaInsets="30"
+                                VerticalScrollBarVisibility="Never"
+                                WidthRequest="400">
+                                <CarouselView.ItemsLayout>
+                                    <LinearItemsLayout
+                                        Orientation="Horizontal"
+                                        SnapPointsAlignment="Center"
+                                        SnapPointsType="Mandatory" />
+                                </CarouselView.ItemsLayout>
+
+                                <CarouselView.ItemTemplate>
+                                    <DataTemplate>
+                                        <VerticalStackLayout>
+                                            <Frame
+                                                Margin="20"
+                                                BorderColor="DarkGray"
+                                                CornerRadius="5"
+                                                HasShadow="True"
+                                                HeightRequest="300"
+                                                HorizontalOptions="Center"
+                                                VerticalOptions="CenterAndExpand">
+                                                <StackLayout>
+                                                    <Image HeightRequest="300" WidthRequest="300">
+                                                        <Image.Source>
+                                                            <FileImageSource File="{Binding}" />
+                                                        </Image.Source>
+                                                    </Image>
+                                                </StackLayout>
+                                            </Frame>
+                                        </VerticalStackLayout>
+                                    </DataTemplate>
+                                </CarouselView.ItemTemplate>
+                            </CarouselView>
+                            <IndicatorView
+                                x:Name="indicatorView"
+                                HorizontalOptions="Center"
+                                IndicatorColor="LightGray"
+                                SelectedIndicatorColor="DarkGray" />
                         </VerticalStackLayout>
 
 
-                        <Button Clicked="OnClickPurchase" Text="Purchase Ticket" />
+                        <VerticalStackLayout Margin="40,0,0,0" WidthRequest="450">
 
-                    </VerticalStackLayout>
+                            <Label
+                                Margin="0,0,0,20"
+                                FontAttributes="Bold"
+                                FontSize="Large"
+                                HorizontalOptions="Center"
+                                Text="{Binding ActiveEvent.Name}"
+                                VerticalOptions="Center" />
+                            <Editor IsReadOnly="True" Text="{Binding ActiveEvent.Description}" />
+                            <FlexLayout Margin="0,10,0,0" JustifyContent="SpaceBetween">
+                                <Label FontAttributes="Bold" Text="{Binding ActiveEvent.TotalCapacity, StringFormat='Maximum Capacity: {0}'}" />
+                                <Label x:Name="lblRemainingCapacity" FontAttributes="Bold" />
+                            </FlexLayout>
+                            <Label
+                                Margin="0,20,0,0"
+                                FontAttributes="Bold"
+                                FontSize="Medium"
+                                HorizontalOptions="Center"
+                                Text="Order Ticket(s):"
+                                VerticalOptions="Center" />
+                            <VerticalStackLayout BindableLayout.ItemsSource="{Binding ActiveEvent.EventClasses}">
+                                <Grid
+                                    ColumnDefinitions="*,*,*"
+                                    ColumnSpacing="30"
+                                    HorizontalOptions="Center"
+                                    RowDefinitions="*,*,*,*,*">
+                                    <Label
+                                        Grid.Column="0"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        HorizontalOptions="Start"
+                                        Text="Type"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="1"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        HorizontalOptions="Start"
+                                        Text="Price"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Column="2"
+                                        FontAttributes="Bold"
+                                        FontSize="Medium"
+                                        HorizontalOptions="Start"
+                                        Text="Quantity"
+                                        VerticalOptions="Center" />
+                                </Grid>
+                                <BindableLayout.ItemTemplate>
 
-                </HorizontalStackLayout>
+                                    <DataTemplate x:DataType="model:EventClassModel">
+                                        <Grid
+                                            ColumnDefinitions="*,*,*"
+                                            ColumnSpacing="30"
+                                            RowDefinitions="*,*,*,*,*">
+                                            <Grid.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsDeleted}"
+                                                    TargetType="Grid"
+                                                    Value="True">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding IsDeleted}"
+                                                    TargetType="Grid"
+                                                    Value="False">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Grid.Triggers>
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                FontSize="Small"
+                                                HorizontalOptions="Start"
+                                                HorizontalTextAlignment="Start"
+                                                Text="{Binding ClassName}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                FontSize="Small"
+                                                Text="{Binding ClassPrice, StringFormat='$ {0:F2}'}" />
+                                            <FlexLayout
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                JustifyContent="SpaceEvenly"
+                                                VerticalOptions="End">
+                                                <Label
+                                                    x:Name="lblVipCount"
+                                                    FontAttributes="Bold"
+                                                    Text="{Binding Source={x:Reference stpVipCount}, Path=Value}"
+                                                    VerticalTextAlignment="Center" />
+                                                <Stepper
+                                                    x:Name="stpVipCount"
+                                                    AutomationId="{Binding ClassId}"
+                                                    Increment="1"
+                                                    Maximum="{Binding ClassMaxQuantity}"
+                                                    Minimum="0"
+                                                    ValueChanged="OnClickTicketQuantityUpdate" />
+                                            </FlexLayout>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </VerticalStackLayout>
 
-                <Label HorizontalOptions="CenterAndExpand" />
-            </VerticalStackLayout>
+                            <Label
+                                Margin="0,10,0,10"
+                                FontAttributes="None"
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="Take a moment to review the items in your cart. Ensure that you have everything you need, and make any necessary adjustments."
+                                WidthRequest="400" />
+                            <Button
+                                BackgroundColor="#DAA520"
+                                Clicked="OnClickPurchase"
+                                CornerRadius="0"
+                                Text="Purchase Ticket" />
+
+                        </VerticalStackLayout>
+
+                    </HorizontalStackLayout>
+
+                    <Label HorizontalOptions="CenterAndExpand" />
+                </VerticalStackLayout>
+            </ScrollView>
         </Grid>
 
     </ScrollView>

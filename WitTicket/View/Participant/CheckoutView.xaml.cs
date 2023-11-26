@@ -2,6 +2,7 @@ using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Maui.Views;
 using System.Collections.ObjectModel;
 using WitTicket.Model;
+using static OpenAI.ObjectModels.SharedModels.IOpenAiModels;
 
 namespace WitTicket.View.Participant;
 
@@ -74,11 +75,13 @@ public partial class CheckoutView : ContentPage
     {
         await DisplayCardProcessor();
         OnSuccessCheckout();
+        await DisplayAlert("Success", "Ticket(s) purchased successfully.", "OK");
+        Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
+        await Navigation.PopAsync();
     }
-    private Task DisplayCardProcessor()
+    private async Task DisplayCardProcessor()
     {
-        this.ShowPopup(new CreditCardProcessorView());
-        return Task.CompletedTask;
+        await this.ShowPopupAsync(new CreditCardProcessorView());
     }
 
     private bool ValidateCreditCardNumber(string creditCardNumber)
@@ -123,7 +126,7 @@ public partial class CheckoutView : ContentPage
     }
  
 
-    private void OnSuccessCheckout()
+    private async void OnSuccessCheckout()
     {
         //create ticket
         //add ticket to ticket list
@@ -134,10 +137,10 @@ public partial class CheckoutView : ContentPage
         {
             for(int i = 0; i < item.Quantity; i++)
             {
-                tickets.Add(new TicketModel(tickets.Count, ActiveEvent.EventId, ParticipantId, item.EventClass.EventId));
+                tickets.Add(new TicketModel(tickets.Count, ActiveEvent.EventId, ParticipantId, item.EventClass.ClassId));
             }
         };
         new Services.Connection().SaveTicketList(tickets);
-        DisplayAlert("Success", "Ticket(s) purchased successfully.", "OK");
+        
     }
 }

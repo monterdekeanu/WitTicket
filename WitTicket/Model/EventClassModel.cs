@@ -9,6 +9,7 @@ namespace WitTicket.Model
         double _classPrice;
         int _classMaxQuantity;
         int _eventId;
+        bool _isDeleted = false;
 
         public int ClassId { get => _classId; set {
                 _classId = value;
@@ -30,6 +31,14 @@ namespace WitTicket.Model
                 _eventId = value;
                 RaisePropertyChanged(nameof(EventId));
                     } }
+        public bool IsDeleted
+        {
+            get => _isDeleted; set
+            {
+                _isDeleted = value;
+                RaisePropertyChanged(nameof(EventId));
+            }
+        }
         public EventClassModel() { }
         public EventClassModel(int classId, string className, double classPrice, int classMaxQuantity, int eventId)
         {

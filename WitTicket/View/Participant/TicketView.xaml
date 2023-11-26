@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="WitTicket.View.Participant.DashboardParticipant"
+    x:Class="WitTicket.View.Participant.TicketView"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:WitTicket.Model"
     Title="">
-    <Shell.BackButtonBehavior>
-        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
-    </Shell.BackButtonBehavior>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="80" />
@@ -28,6 +24,7 @@
             JustifyContent="SpaceBetween"
             VerticalOptions="CenterAndExpand">
             <Label
+                x:Name="lblTitle"
                 Padding="20,10,20,20"
                 FontAttributes="Bold"
                 FontSize="Header"
@@ -56,11 +53,9 @@
                         BorderColor="#ecf0f1"
                         Clicked="OnClickViewTicketsBtn"
                         CornerRadius="0"
-                        Text="View Tickets">
-                        <Button.GestureRecognizers>
-                            <PointerGestureRecognizer PointerEntered="OnPointerEnteredBtn" PointerExited="OnPointerExitBtn" />
-                        </Button.GestureRecognizers>
-                    </Button>
+                        IsEnabled="False"
+                        Text="View Tickets"
+                        TextColor="#DAA520" />
                     <Button
                         BackgroundColor="Transparent"
                         BorderColor="#ecf0f1"
@@ -94,72 +89,51 @@
                             Grid.Row="0"
                             Grid.Column="0"
                             Aspect="AspectFill"
-                            HeightRequest="350"
+                            HeightRequest="300"
                             Source="background_stadium.png" />
-                        <VerticalStackLayout
-                            Grid.Row="0"
-                            Grid.Column="0"
-                            Margin="0,0,0,0"
-                            HorizontalOptions="Center"
-                            VerticalOptions="Center">
-                            <Image HeightRequest="100" Source="witticket_logo.png" />
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="Header"
-                                Text="Find your event"
-                                TextColor="white" />
-                            <Line
-                                Margin="0,0,0,10"
-                                BackgroundColor="White"
-                                HeightRequest="2"
-                                WidthRequest="300" />
-                            <Label
-                                Padding="10,0"
-                                BackgroundColor="#DAA520"
-                                FontAttributes="Italic"
-                                FontSize="Micro"
-                                HorizontalOptions="Center"
-                                Text="Get your fast ticket"
-                                TextColor="white" />
-
-                        </VerticalStackLayout>
 
 
                     </Grid>
-                    <HorizontalStackLayout
-                        Margin="0,-20,0,0"
-                        Padding="10"
-                        BackgroundColor="#001F3F"
-                        HorizontalOptions="Center"
-                        Opacity="0.9">
-                        <Entry
-                            x:Name="sbParticipant"
-                            Margin="0,0,0,0"
-                            BackgroundColor="#ecf0f1"
-                            HeightRequest="24"
-                            TextChanged="OnSearchBarTextChange"
-                            WidthRequest="258" />
-                        <Button
-                            Margin="10,0,0,0"
-                            BackgroundColor="#DAA520"
-                            BorderColor="#DAA520"
-                            BorderWidth="1"
-                            CornerRadius="0"
-                            FontAttributes="Bold"
-                            Text="Find Event" />
-                    </HorizontalStackLayout>
-                    <Label
-                        Margin="40,10,0,0"
-                        FontAttributes="Bold"
-                        FontSize="Header"
-                        Text="BROWSE"
-                        TextColor="#001F3F" />
+
                 </FlexLayout>
-                <FlexLayout
-                    x:Name="flEventsContainer"
-                    Margin="100,0,100,0"
-                    HorizontalOptions="FillAndExpand"
-                    Wrap="Wrap" />
+
+                <HorizontalStackLayout HorizontalOptions="Center">
+                    <VerticalStackLayout Margin="50,-150,0,0" HorizontalOptions="Start">
+
+                        <Image
+                            HeightRequest="240"
+                            Source="witticket_logo.png"
+                            WidthRequest="240" />
+                        <Frame
+                            Margin="0,-40,0,0"
+                            HeightRequest="180"
+                            WidthRequest="250">
+
+                            <VerticalStackLayout>
+                                <Button
+                                    BackgroundColor="#001F3F"
+                                    FontAttributes="Bold"
+                                    Text="Send Ticket To Email" />
+                                <Button
+                                    BackgroundColor="#001F3F"
+                                    FontAttributes="Bold"
+                                    Text="Contact Support" />
+                                <Label
+                                    Margin="0,10,0,0"
+                                    FontSize="12"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Protect your event experience by ensuring your tickets are in a safe place. Treat them like cash!" />
+                            </VerticalStackLayout>
+                        </Frame>
+
+                    </VerticalStackLayout>
+
+                    <VerticalStackLayout
+                        x:Name="ticketContainer"
+                        Margin="100,20,100,0"
+                        HorizontalOptions="CenterAndExpand" />
+                </HorizontalStackLayout>
+
             </VerticalStackLayout>
         </ScrollView>
     </Grid>
