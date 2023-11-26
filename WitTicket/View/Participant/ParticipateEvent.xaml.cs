@@ -1,5 +1,6 @@
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Storage;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using WitTicket.Model;
 using WitTicket.Services;
@@ -12,6 +13,10 @@ public partial class ParticipateEvent : ContentPage
     private int ParticipantID { get; set; }
 
     private List<TicketCartItem> TicketCartItems { get; set; } = new List<TicketCartItem>();
+    public ParticipateEvent()
+    {
+        InitializeComponent();
+    }
     public ParticipateEvent(EventModel activeEvent, int participantID)
 	{
 		InitializeComponent();
@@ -20,8 +25,18 @@ public partial class ParticipateEvent : ContentPage
         InitializeImages();
         BindingContext = this;
         InitializeCart();
+        lblTitle.GestureRecognizers.Add(new TapGestureRecognizer
+        {
+            Command = new Command(() => new NavigationController().OnClickHome(Navigation))
+        });
+        InitializeRemainingCapacity();
     }
-
+    private void InitializeRemainingCapacity()
+    {
+        ObservableCollection<TicketModel> ticketList = (new Services.Connection()).GetTicketList();
+        int remainingCapacity = ActiveEvent.TotalCapacity - ticketList.Where(x => x.EventId.Equals(ActiveEvent.EventId)).Count();
+        lblRemainingCapacity.Text = $"Remaining Capacity: {remainingCapacity}";
+    }
     private void InitializeCart()
     {
         foreach (EventClassModel eventClass in ActiveEvent.EventClasses)

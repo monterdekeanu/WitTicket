@@ -6,6 +6,9 @@ using System.Diagnostics;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Maui.Core.Extensions;
 using QRCoder;
+using Microsoft.Maui.Controls.Internals;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 
 public partial class TicketView : ContentPage
 {
@@ -21,11 +24,24 @@ public partial class TicketView : ContentPage
         InitializeTickets();
         lblTitle.GestureRecognizers.Add(new TapGestureRecognizer
         {
-            Command = new Command(() => new NavigationController().OnClickHome(activeUser.AccountId, Navigation))
+            Command = new Command(() => new NavigationController().OnClickHome(Navigation))
         });
         
 	}
+    private async void OnClickDownloadImage(object sender, EventArgs e)
+    {
+        HorizontalStackLayout parent = (HorizontalStackLayout)((Button)sender).Parent;
+        ((Button)sender).IsVisible = false;
+        var image = await parent.CaptureAsync();
 
+        using MemoryStream memoryStream = new MemoryStream();
+
+        await image.CopyToAsync(memoryStream);
+
+        File.WriteAllBytes($"C:\\Users\\user\\Desktop\\{ActiveUser.FirstName}_{((Button)sender).AutomationId}.png", memoryStream.ToArray());
+        ((Button)sender).IsVisible = true;
+        await Toast.Make("Ticket Saved",ToastDuration.Short,14).Show();
+    }
     private void InitializeTickets()
     {
         ActiveTickets =  tickets.Where(x => x.AccountId.Equals(ActiveUser.AccountId)).ToList().ToObservableCollection<TicketModel>();
@@ -37,6 +53,7 @@ public partial class TicketView : ContentPage
                 ticketContainer.Children.Clear();
                 break;
             }
+            Grid gridParentContainer = new();
             Frame ticketFrame = new();
             ticketFrame.Padding = 0;
             ticketFrame.CornerRadius = 0;
@@ -45,37 +62,55 @@ public partial class TicketView : ContentPage
             HorizontalStackLayout ticketStackLayout = new();
             ticketStackLayout.VerticalOptions = LayoutOptions.Center;
             Grid ticketGrid = new();
+            ticketGrid.BackgroundColor = Color.FromArgb("#99001f3f");
             ticketGrid.Padding = 20;
             ticketGrid.WidthRequest = 450;
 
             for(int i = 0; i < 4; i++) {
                 ticketGrid.ColumnDefinitions.Add(new ColumnDefinition());
             }
-            for(int i =0 ; i < 2; i++) {
+            for(int i =0 ; i < 3; i++) {
                 ticketGrid.RowDefinitions.Add(new RowDefinition());
             }
-            ticketGrid.Add(new Label {Text = "Event Name",FontAttributes = FontAttributes.Bold},0,0);
-            ticketGrid.Add(new Label { Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).Name },1,0);
-            ticketGrid.Add(new Label { Text = "Date", FontAttributes = FontAttributes.Bold }, 0,1);
-            ticketGrid.Add(new Label { Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).StartDate.ToShortDateString()}, 1, 1);
-            ticketGrid.Add(new Label { Text = "Ticket #: ", FontAttributes = FontAttributes.Bold }, 2, 0);
-            ticketGrid.Add(new Label { Text = ticket.TicketId.ToString() }, 3, 0);
-            ticketGrid.Add(new Label { Text = "Ticket Type: ", FontAttributes = FontAttributes.Bold },2,1);
-            ticketGrid.Add(new Label { Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).EventClasses.FirstOrDefault(ec => ec.ClassId == ticket.TicketType).ClassName }, 3, 1);
+            Label lblEventTitle = new Label { TextColor= Color.FromHex("#ecf0f1"), Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).Name, TextTransform = TextTransform.Uppercase, FontSize= 18, FontAttributes = FontAttributes.Bold };
+            ticketGrid.Add(lblEventTitle,0,0);
+            ticketGrid.SetColumnSpan(lblEventTitle, 4);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = "Date", FontAttributes = FontAttributes.Bold }, 2,2);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).StartDate.ToShortDateString()}, 3, 2);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = "Ticket #: ", FontAttributes = FontAttributes.Bold }, 0, 2);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = ticket.TicketId.ToString() }, 1, 2);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = "Ticket Type: ", FontAttributes = FontAttributes.Bold },2,1);
+            ticketGrid.Add(new Label { TextColor = Color.FromHex("#ecf0f1"), Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).EventClasses.FirstOrDefault(ec => ec.ClassId == ticket.TicketType).ClassName, FontSize = 12 }, 3, 1);
             //ticketGrid.Add(new Label { Text = events.FirstOrDefault(e => e.EventId == ticket.EventId).EventClasses[0].ClassName }, 3, 1);
             Image currentTicketImage= new();
             currentTicketImage.Source = ImageSource.FromFile($@"{Path.Combine(Environment.GetEnvironmentVariable("DATABASE_EVENT_IMAGES", EnvironmentVariableTarget.Process), events.FirstOrDefault(e => e.EventId == ticket.EventId).Images[0])}");
             //events.FirstOrDefault(e => e.EventId == ticket.EventId).Images[0];
-            currentTicketImage.WidthRequest = 180;
-            currentTicketImage.HeightRequest = 120;
+            //currentTicketImage.WidthRequest = 180;
+            //currentTicketImage.HeightRequest = 120;
             currentTicketImage.Aspect = Aspect.AspectFill;
             ticketFrame.Content = ticketStackLayout;
-            ticketStackLayout.Add(ticketGrid);
-            ticketStackLayout.Add(currentTicketImage);
+            gridParentContainer.Add(currentTicketImage,0,0);
+            gridParentContainer.Add(ticketGrid, 0, 0);
+
+            ticketStackLayout.Add(gridParentContainer);
+            //ticketStackLayout.Add(currentTicketImage);
             ticketStackLayout.Add(GenerateQRCode($"{ticket.AccountId}-{ticket.TicketId}-{ticket.EventId}", new Image() { WidthRequest = 120, HeightRequest = 110, Aspect = Aspect.AspectFit }));
+            Button saveTicketBtn = new();
+            saveTicketBtn.Text = "Save Ticket";
+            saveTicketBtn.AutomationId = ticket.TicketId.ToString();
+            saveTicketBtn.CornerRadius = 0;
+            saveTicketBtn.BackgroundColor = Color.FromHex("#DAA520");
+            saveTicketBtn.Clicked += OnClickDownloadImage;
+            ticketStackLayout.BackgroundColor = Color.FromHex("#ecf0f1");
+            ticketStackLayout.Add(saveTicketBtn);
             
             ticketContainer.Children.Add(ticketFrame);
         }
+    }
+
+    private void SaveTicketBtn_Clicked(object sender, EventArgs e)
+    {
+        throw new NotImplementedException();
     }
 
     private Image GenerateQRCode(string InputText, Image QrCodeImage)

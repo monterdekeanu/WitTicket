@@ -37,8 +37,8 @@ public partial class DashboardParticipant : ContentPage
                 ImageButton cardView = new ImageButton();
                 cardView.Margin = new Thickness(10, 10, 10, 10);
                 cardView.HeightRequest = 250;
-                cardView.WidthRequest = 150;
-                cardView.CornerRadius = 5;
+                cardView.WidthRequest = 200;
+                cardView.CornerRadius = 2;
                 cardView.BackgroundColor = Color.FromHex("#F0F0F0");
                 cardView.Clicked += async (sender, e) => { await Navigation.PushAsync(new ParticipateEvent(eventModel,ActiveUser.AccountId)); };
                 if (eventModel.Images.Count > 0)

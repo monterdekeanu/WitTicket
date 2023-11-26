@@ -20,7 +20,7 @@ public partial class CreditCardProcessorView : Popup
         lblNotice.Text = "Transaction Successful";
         HideActivityIndicator();
         await CloseTimer();
-        this.Close();
+        await CloseAsync();
     }
     private void HideActivityIndicator()
     {

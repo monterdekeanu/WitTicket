@@ -11,7 +11,7 @@ namespace WitTicket.Services
     public class NavigationController
     {
         public NavigationController() { }
-        public async void OnClickHome(int um, INavigation navigation)
+        public async void OnClickHome(INavigation navigation)
         {
             await navigation.PopAsync();
         }

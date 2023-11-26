@@ -50,9 +50,11 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Images\background_stadium.png" />
+	  <None Remove="Resources\Images\GCash_logo.png" />
 	  <None Remove="Resources\Images\home_icon.svg" />
 	  <None Remove="Resources\Images\logout_icon.png" />
 	  <None Remove="Resources\Images\no_image.png" />
+	  <None Remove="Resources\Images\Paypal_logo.png" />
 	  <None Remove="Resources\Images\witticket_logo.png" />
 	</ItemGroup>
 

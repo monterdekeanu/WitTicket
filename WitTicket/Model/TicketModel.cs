@@ -7,7 +7,7 @@ public class TicketModel : PropertyChecker
 	private int _ticketId;
 	private int _eventId;
 	private int _accountId;
-	private int _ticketType; /// 1 is VIP , 2 is Regular, 3 is General Admission
+	private int _ticketType; 
 
 	public int TicketId { get => _ticketId; set{
             _ticketId = value;

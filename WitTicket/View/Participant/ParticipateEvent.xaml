@@ -26,7 +26,7 @@
                 JustifyContent="SpaceBetween"
                 VerticalOptions="CenterAndExpand">
                 <Label
-                    x:Name="lblLogo"
+                    x:Name="lblTitle"
                     Padding="20,10,20,20"
                     FontAttributes="Bold"
                     FontSize="Header"
@@ -176,7 +176,7 @@
                         </VerticalStackLayout>
 
 
-                        <VerticalStackLayout Margin="40,0,0,0" MaximumWidthRequest="700">
+                        <VerticalStackLayout Margin="40,0,0,0" WidthRequest="450">
 
                             <Label
                                 Margin="0,0,0,20"
@@ -186,6 +186,10 @@
                                 Text="{Binding ActiveEvent.Name}"
                                 VerticalOptions="Center" />
                             <Editor IsReadOnly="True" Text="{Binding ActiveEvent.Description}" />
+                            <FlexLayout Margin="0,10,0,0" JustifyContent="SpaceBetween">
+                                <Label FontAttributes="Bold" Text="{Binding ActiveEvent.TotalCapacity, StringFormat='Maximum Capacity: {0}'}" />
+                                <Label x:Name="lblRemainingCapacity" FontAttributes="Bold" />
+                            </FlexLayout>
                             <Label
                                 Margin="0,20,0,0"
                                 FontAttributes="Bold"
@@ -222,12 +226,26 @@
                                         VerticalOptions="Center" />
                                 </Grid>
                                 <BindableLayout.ItemTemplate>
+
                                     <DataTemplate x:DataType="model:EventClassModel">
                                         <Grid
                                             ColumnDefinitions="*,*,*"
                                             ColumnSpacing="30"
                                             RowDefinitions="*,*,*,*,*">
-
+                                            <Grid.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsDeleted}"
+                                                    TargetType="Grid"
+                                                    Value="True">
+                                                    <Setter Property="IsVisible" Value="False" />
+                                                </DataTrigger>
+                                                <DataTrigger
+                                                    Binding="{Binding IsDeleted}"
+                                                    TargetType="Grid"
+                                                    Value="False">
+                                                    <Setter Property="IsVisible" Value="True" />
+                                                </DataTrigger>
+                                            </Grid.Triggers>
                                             <Label
                                                 Grid.Row="1"
                                                 Grid.Column="0"
@@ -263,7 +281,14 @@
                                 </BindableLayout.ItemTemplate>
                             </VerticalStackLayout>
 
-
+                            <Label
+                                Margin="0,10,0,10"
+                                FontAttributes="None"
+                                FontSize="10"
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                Text="Take a moment to review the items in your cart. Ensure that you have everything you need, and make any necessary adjustments."
+                                WidthRequest="400" />
                             <Button
                                 BackgroundColor="#DAA520"
                                 Clicked="OnClickPurchase"

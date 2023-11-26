@@ -104,12 +104,26 @@
                             HeightRequest="240"
                             Source="witticket_logo.png"
                             WidthRequest="240" />
-                        <Frame Margin="0,-40,0,0">
+                        <Frame
+                            Margin="0,-40,0,0"
+                            HeightRequest="180"
+                            WidthRequest="250">
 
-                            <Label
-                                FontSize="Micro"
-                                HorizontalTextAlignment="Start"
-                                Text="{Binding ActiveUser.FirstName, StringFormat='First Name: {0}'}" />
+                            <VerticalStackLayout>
+                                <Button
+                                    BackgroundColor="#001F3F"
+                                    FontAttributes="Bold"
+                                    Text="Send Ticket To Email" />
+                                <Button
+                                    BackgroundColor="#001F3F"
+                                    FontAttributes="Bold"
+                                    Text="Contact Support" />
+                                <Label
+                                    Margin="0,10,0,0"
+                                    FontSize="12"
+                                    HorizontalTextAlignment="Center"
+                                    Text="Protect your event experience by ensuring your tickets are in a safe place. Treat them like cash!" />
+                            </VerticalStackLayout>
                         </Frame>
 
                     </VerticalStackLayout>
