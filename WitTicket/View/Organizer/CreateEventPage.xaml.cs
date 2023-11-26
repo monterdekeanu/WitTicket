@@ -1,6 +1,8 @@
 using CommunityToolkit.Maui.Core.Extensions;
 using CommunityToolkit.Maui.Storage;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 using WitTicket.Model;
 
 namespace WitTicket.View.Organizer;
@@ -11,7 +13,7 @@ public partial class CreateEventPage : ContentPage
     private List<string> selectedImageFileNames = new List<string>();
     public ObservableCollection<EventClassModel> EventClasses { get; set; }
     public UserModel activeUser = new();
-    public EventModel ActiveEvent { get; set; }
+    public EventModel ActiveEvent { get; set; } = new();
     public CreateEventPage(UserModel user)
     {
         InitializeComponent();
@@ -21,10 +23,10 @@ public partial class CreateEventPage : ContentPage
         BindingContext = this;
     }
 
-    public CreateEventPage(UserModel user, EventModel activeEvent) //Update Event Initialization
+    public CreateEventPage(UserModel user, int activeEvent) //Update Event Initialization
     {
         InitializeComponent();
-        ActiveEvent = activeEvent;
+        ActiveEvent = (new Services.Connection().GetEvent(activeEvent));
         EventClasses = ActiveEvent.EventClasses.ToObservableCollection<EventClassModel>();
         activeUser = user;
         
@@ -49,8 +51,67 @@ public partial class CreateEventPage : ContentPage
     private void UpdateCapacity()
     {
         int totalCapacity = 0;
-        EventClasses.ToList().ForEach(x => totalCapacity += x.ClassMaxQuantity);
+        EventClasses.ToList().Where(x => !x.IsDeleted).ToList().ForEach(x => totalCapacity += x.ClassMaxQuantity); 
         capacityEntry.Text = totalCapacity.ToString();
+        ActiveEvent.TotalCapacity = totalCapacity;
+    }
+
+    private void OnPriceChange(object sender, EventArgs e)
+{
+    int classId = ((EventClassModel)((Entry)sender).BindingContext).ClassId;
+    string inputText = ((Entry)sender).Text;
+
+    // Remove non-numeric characters and at most one dot at the end
+    string cleanedInput = new string(inputText
+        .Where((c, index) => 
+            (char.IsDigit(c) || (c == '.' && inputText.Count(ch => ch == '.') == 1)))
+        .ToArray());
+
+    if (cleanedInput.Length > 0)
+        {
+            // Add '0' if the last character is a dot
+            if (cleanedInput[cleanedInput.Length - 1] == '.')
+            {
+                cleanedInput += "0";
+            }
+
+            // Update ClassPrice using LINQ
+            EventClasses.FirstOrDefault(x => x.ClassId == classId).ClassPrice = double.Parse(cleanedInput);
+        }
+        else if(cleanedInput.Length == 0)
+        {
+            EventClasses.FirstOrDefault(x => x.ClassId == classId).ClassPrice = 0;
+        }
+        else
+        {
+            EventClasses.FirstOrDefault(x => x.ClassId == classId).ClassPrice = double.Parse(cleanedInput);
+        }
+    }
+
+    private void OnQuantityChange(object sender, EventArgs e)
+    {
+        int classId = ((EventClassModel)((Entry)sender).BindingContext).ClassId;
+        string inputText = ((Entry)sender).Text;
+
+        // Remove non-numeric characters
+        string cleanedInput = new string(inputText.Where(char.IsDigit).ToArray());
+
+        if (int.TryParse(cleanedInput, out int parsedQuantity))
+        {
+            EventClasses.FirstOrDefault(x => x.ClassId == classId).ClassMaxQuantity = parsedQuantity;
+            UpdateCapacity();
+        }
+        else
+        {
+            // Handle the case where the input is not a valid integer
+            Debug.WriteLine($"Invalid input: {inputText}");
+        }
+    }
+
+    private void OnClassNameChange(object sender, EventArgs e)
+    {
+        int classId = ((EventClassModel)((Entry)sender).BindingContext).ClassId;
+        EventClasses.FirstOrDefault(x => x.ClassId == classId).ClassName = ((Entry)sender).Text;
     }
     private void OnClickAddClass(object sender, EventArgs e)
     {
@@ -76,11 +137,13 @@ public partial class CreateEventPage : ContentPage
     }
     private void OnClickRemoveClass (object sender, EventArgs e)
     {
-        EventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
-        for(int i = 0; i < EventClasses.Count; i++) //update index
-        {
-            EventClasses[i].ClassId = i;
-        }
+        EventClasses.FirstOrDefault(x => x.ClassId == Int32.Parse(((Button)sender).AutomationId)).IsDeleted = true;
+        ((Grid)((Button)sender).Parent).IsVisible = false;
+        //EventClasses.Remove((EventClassModel)((Button)sender).BindingContext);
+        //for(int i = 0; i < EventClasses.Count; i++) //update index
+        //{
+        //    EventClasses[i].ClassId = i;
+        //}
         UpdateCapacity();
     }
     private async void OnClickUploadImage(object sender, EventArgs e)

@@ -43,7 +43,10 @@
                 </HorizontalStackLayout>
             </FlexLayout>
 
-            <VerticalStackLayout Grid.Row="1" VerticalOptions="CenterAndExpand">
+            <VerticalStackLayout
+                x:Name="vslMain"
+                Grid.Row="1"
+                VerticalOptions="CenterAndExpand">
                 <Image
                     Margin="0,-40,0,-10"
                     HeightRequest="128"

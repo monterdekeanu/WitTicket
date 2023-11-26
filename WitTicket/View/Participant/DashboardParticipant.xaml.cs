@@ -20,14 +20,15 @@ public partial class DashboardParticipant : ContentPage
 		InitializeComponent();
 		ActiveUser = activeUser;
 		BindingContext = this;
-        InitializeEvents();
+        InitializeEvents(events);
 
     }
 
-    public void InitializeEvents()
+    
+    public async void InitializeEvents(ObservableCollection<EventModel> obsCollectionEvents)
     {
         flEventsContainer.Children.Clear();
-        foreach (EventModel eventModel in events)
+        foreach (EventModel eventModel in obsCollectionEvents)
         {
             if (true)
             {
@@ -36,8 +37,8 @@ public partial class DashboardParticipant : ContentPage
                 ImageButton cardView = new ImageButton();
                 cardView.Margin = new Thickness(10, 10, 10, 10);
                 cardView.HeightRequest = 250;
-                cardView.WidthRequest = 150;
-                cardView.CornerRadius = 10;
+                cardView.WidthRequest = 200;
+                cardView.CornerRadius = 2;
                 cardView.BackgroundColor = Color.FromHex("#F0F0F0");
                 cardView.Clicked += async (sender, e) => { await Navigation.PushAsync(new ParticipateEvent(eventModel,ActiveUser.AccountId)); };
                 if (eventModel.Images.Count > 0)
@@ -57,14 +58,27 @@ public partial class DashboardParticipant : ContentPage
                 Label lblEventDate = new();
                 lblEventDate.Text = eventModel.StartDate.ToShortDateString();
                 lblEventDate.HorizontalTextAlignment = TextAlignment.Center;
+                
                 cardLayout.Children.Add(cardView);
                 cardLayout.Children.Add(lblEventName);
                 cardLayout.Children.Add(lblEventDate);
+                cardLayout.Opacity = 0;
+                
                 flEventsContainer.Children.Add(cardLayout);
             }
 
             
         }
+        try {
+            foreach (VerticalStackLayout cardLayout in flEventsContainer.Children)
+            {
+                await cardLayout.FadeTo(1, 250,Easing.SinInOut);
+            }
+        }catch(Exception e)
+        {
+            Debug.WriteLine(e.Message);
+        }
+        
 
 
     }
@@ -86,15 +100,17 @@ public partial class DashboardParticipant : ContentPage
     }
     private void OnSearchBarTextChange(object sender, EventArgs e)
     {
-        if(((SearchBar)sender).Text == null || ((SearchBar)sender).Text == "")
+        if(((Entry)sender).Text == null || ((Entry)sender).Text == "")
         {
             searchEvents = null;
             OnPropertyChanged(nameof(searchEvents));
+            InitializeEvents(events);
             return;
         }
         
-        searchEvents = events.Where(x => x.Name.ToLower().Contains(((SearchBar)sender).Text.ToLower())).ToObservableCollection<EventModel>();
+        searchEvents = events.Where(x => x.Name.ToLower().Contains(((Entry)sender).Text.ToLower())).ToObservableCollection<EventModel>();
         OnPropertyChanged(nameof(searchEvents));
+        InitializeEvents(searchEvents);
     }
     private async void OnClickSearch(object sender, EventArgs e)
     {
@@ -103,8 +119,58 @@ public partial class DashboardParticipant : ContentPage
         await Navigation.PushAsync(new ParticipateEvent(events[index], ActiveUser.AccountId));
     }
 
-    private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
+    private async void OnClickProfileIcon(object sender, EventArgs e)
     {
-
+        if(vslMenu.Opacity == 0)
+        {
+            vslMenu.Opacity = 1;
+            try
+            {
+                foreach (Button btn in vslMenu.Children)
+                {
+                    btn.Opacity = 0;
+                }
+                foreach (Button btn in vslMenu.Children)
+                {
+                    await btn.FadeTo(1, 250, Easing.SinInOut);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }else if(vslMenu.Opacity == 1)
+        {
+            vslMenu.Opacity = 0;
+            try
+            {
+                foreach (Button btn in vslMenu.Children)
+                {
+                    btn.Opacity = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+        }
+    }
+    private void OnPointerEnteredBtn(object sender, EventArgs e)
+    {
+        ((Button)sender).BackgroundColor = Color.FromHex("#DAA520");
+        ((Button)sender).BorderColor = Color.FromHex("#DAA520");
+    }
+    private void OnPointerExitBtn(object sender, EventArgs e)
+    {
+        ((Button)sender).BackgroundColor = Color.FromRgba(0, 0, 0, 0);
+        ((Button)sender).BorderColor = Color.FromHex("#FFFFFF");
+    }
+    public async void OnClickLogout(object sender, EventArgs e)
+    {
+        await Navigation.PopToRootAsync();
+    }
+    private async void OnClickViewTicketsBtn(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new TicketView(ActiveUser));
     }
 }

@@ -21,6 +21,8 @@ public class EventModel : PropertyChecker
         public int OrganizerId { get; set; }       // ID of the event organizer
         public string Description { get; set; }     // Description of the event
         //GO GO GO GAGAGA HUHUH MAMA
+
+    public EventModel() { }
         public EventModel(List<EventClassModel> eventClasses, int eventId, string name, string city, string street, DateTime startDate, DateTime endDate, double price, int totalCapacity, string organizer, int organizerId, string description)
         {
             EventClasses = eventClasses;

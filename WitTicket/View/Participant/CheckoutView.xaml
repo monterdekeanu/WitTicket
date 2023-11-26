@@ -4,7 +4,11 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:WitTicket.Model"
-    Title="">
+    Title=""
+    BackgroundColor="GhostWhite">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
     <ContentPage.Resources>
         <Style TargetType="Entry">
             <Setter Property="Margin" Value="0,0,0,10" />
@@ -22,143 +26,192 @@
     </ContentPage.Resources>
     <ScrollView Margin="0,40,0,0" VerticalOptions="Start">
         <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
-            <VerticalStackLayout Margin="0,0,20,0">
-                <VerticalStackLayout>
-                    <Label Text="Quick checkout with GCash or Paypal:" />
-                    <HorizontalStackLayout>
-                        <Button Text="GCash" />
-                        <Button Text="Paypal" />
-                    </HorizontalStackLayout>
+            <Frame Margin="0,0,20,0">
+                <VerticalStackLayout BackgroundColor="White">
+                    <VerticalStackLayout>
+                        <Label Text="Quick checkout with GCash or Paypal:" />
+                        <HorizontalStackLayout>
+                            <ImageButton
+                                Margin="0,0,10,0"
+                                Padding="6,2"
+                                BorderColor="#001F3F"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                HeightRequest="16"
+                                Source="gcash_logo.png" />
+                            <ImageButton
+                                Padding="5,2"
+                                BorderColor="#001F3F"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                HeightRequest="16"
+                                Source="paypal_logo.png" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Margin="0,5,0,0">
+                        <Label Text="Card Number" />
+                        <Entry
+                            x:Name="txtCardNumber"
+                            MaxLength="19"
+                            Placeholder="**** **** **** ****"
+                            TextChanged="OnChangeCreditCardNumber" />
+                        <Label
+                            x:Name="lblCreditCardNumberError"
+                            FontAttributes="None"
+                            FontSize="10"
+                            HorizontalTextAlignment="End"
+                            IsVisible="false"
+                            Text="Invalid Card Number"
+                            TextColor="Red" />
+                        <HorizontalStackLayout>
+                            <VerticalStackLayout Margin="0,0,20,0">
+                                <Label Text="Expiration Date" />
+                                <Entry x:Name="txtCardExpirationDate" Placeholder="MM/YYYY" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Margin="0,0,20,0">
+                                <Label Text="CVV/CVC" />
+                                <Entry x:Name="txtCardCVV" Placeholder="***" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout>
+                                <Label Text="Billing Zip Code" />
+                                <Entry x:Name="txtCardZipCode" Placeholder="*****" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+
+                        <Button
+                            BackgroundColor="#001F3F"
+                            Clicked="OnClickCheckout"
+                            CornerRadius="0"
+                            FontAttributes="Bold"
+                            Text="PLACE ORDER" />
+                        <Label
+                            Margin="0,5,0,0"
+                            FontAttributes="None"
+                            FontSize="10"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            Text="Click the Place Order button to finalize your transaction. Rest assured, your information is handled with the utmost care."
+                            WidthRequest="300" />
+                    </VerticalStackLayout>
                 </VerticalStackLayout>
-                <VerticalStackLayout>
-                    <Label Text="Card Number" />
-                    <Entry
-                        x:Name="txtCardNumber"
-                        MaxLength="19"
-                        Placeholder="**** **** **** ****"
-                        TextChanged="OnChangeCreditCardNumber" />
+            </Frame>
+            <Frame>
+                <VerticalStackLayout Padding="20,0,20,20" BackgroundColor="White">
+                    <FlexLayout
+                        BackgroundColor="#001F3F"
+                        JustifyContent="SpaceBetween"
+                        VerticalOptions="Center">
+                        <VerticalStackLayout Padding="10,0,0,0" VerticalOptions="Center">
+                            <Image
+                                HeightRequest="64"
+                                Source="witticket_logo.png"
+                                WidthRequest="64" />
+                        </VerticalStackLayout>
+                        <HorizontalStackLayout
+                            Padding="20"
+                            HorizontalOptions="Center"
+                            VerticalOptions="Center">
+                            <Label
+                                Margin="0,0,10,0"
+                                Text="ORDER SUMMARY"
+                                TextColor="White"
+                                VerticalOptions="Center" />
+                            <Button
+                                BackgroundColor="Transparent"
+                                Clicked="OnClickEdit"
+                                FontAttributes="Italic"
+                                Text="Edit" />
+                        </HorizontalStackLayout>
+                    </FlexLayout>
+                    <Grid Padding="0,10,0,10" BackgroundColor="White">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="254" />
+                            <ColumnDefinition Width="100" />
+                            <ColumnDefinition Width="100" />
+                        </Grid.ColumnDefinitions>
+                        <Label
+                            Grid.Column="0"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Center"
+                            Text="Ticket Type" />
+                        <Label
+                            Grid.Column="1"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Center"
+                            Text="Quantity" />
+                        <Label
+                            Grid.Column="2"
+                            FontSize="Micro"
+                            HorizontalTextAlignment="Center"
+                            Text="Price" />
+                    </Grid>
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding CartItems}">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="model:TicketCartItem">
+                                <Grid Margin="0,0,0,10" BackgroundColor="White">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="254" />
+                                        <ColumnDefinition Width="100" />
+                                        <ColumnDefinition Width="100" />
+                                    </Grid.ColumnDefinitions>
+                                    <Label
+                                        Grid.Column="0"
+                                        Style="{StaticResource lblRegular}"
+                                        Text="{Binding EventClass.ClassName}" />
+                                    <Label
+                                        Grid.Column="1"
+                                        HorizontalTextAlignment="Center"
+                                        Style="{StaticResource lblRegular}"
+                                        Text="{Binding Quantity}" />
+                                    <Label
+                                        Grid.Column="2"
+                                        HorizontalTextAlignment="End"
+                                        Style="{StaticResource lblRegular}"
+                                        Text="{Binding TotalPrice, StringFormat='$ {0:F2}'}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                    <FlexLayout Margin="0,10,0,0" JustifyContent="SpaceBetween">
+
+                        <Label Text="Subtotal" />
+                        <Label x:Name="lblSubtotal" Text="$0.00" />
+                    </FlexLayout>
+                    <VerticalStackLayout Margin="0,10,0,0">
+                        <Label Text="Have a promotion code? Enter here:" />
+                        <HorizontalStackLayout>
+                            <Entry
+                                x:Name="txtPromoCode"
+                                Margin="0"
+                                WidthRequest="254" />
+                            <Button
+                                BackgroundColor="#DAA520"
+                                CornerRadius="0"
+                                FontAttributes="Bold"
+                                Text="Apply" />
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+
+                    <FlexLayout Margin="0,10,0,0" JustifyContent="SpaceBetween">
+                        <Label FontSize="Large" Text="Total" />
+                        <Label
+                            x:Name="lblTotal"
+                            FontSize="Large"
+                            Text="$0.00" />
+                    </FlexLayout>
                     <Label
-                        x:Name="lblCreditCardNumberError"
+                        Margin="0,5,0,10"
                         FontAttributes="None"
                         FontSize="10"
-                        HorizontalTextAlignment="End"
-                        IsVisible="false"
-                        Text="Invalid Card Number"
-                        TextColor="Red" />
-                    <HorizontalStackLayout>
-                        <VerticalStackLayout Margin="0,0,20,0">
-                            <Label Text="Expiration Date" />
-                            <Entry x:Name="txtCardExpirationDate" Placeholder="MM/YYYY" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout Margin="0,0,20,0">
-                            <Label Text="CVV/CVC" />
-                            <Entry x:Name="txtCardCVV" Placeholder="***" />
-                        </VerticalStackLayout>
-                        <VerticalStackLayout>
-                            <Label Text="Billing Zip Code" />
-                            <Entry x:Name="txtCardZipCode" Placeholder="*****" />
-                        </VerticalStackLayout>
-                    </HorizontalStackLayout>
-
-                    <Button Clicked="OnClickCheckout" Text="CHECKOUT" />
-                </VerticalStackLayout>
-            </VerticalStackLayout>
-            <VerticalStackLayout>
-                <FlexLayout
-                    BackgroundColor="#293453"
-                    JustifyContent="SpaceBetween"
-                    VerticalOptions="Center">
-                    <VerticalStackLayout Padding="10,0,0,0" VerticalOptions="Center">
-                        <Image
-                            HeightRequest="64"
-                            Source="witticket_logo.png"
-                            WidthRequest="64" />
-                    </VerticalStackLayout>
-                    <HorizontalStackLayout
-                        Padding="20"
                         HorizontalOptions="Center"
-                        VerticalOptions="Center">
-                        <Label
-                            Margin="0,0,10,0"
-                            Text="ORDER SUMMARY"
-                            TextColor="White"
-                            VerticalOptions="Center" />
-                        <Button
-                            BackgroundColor="Transparent"
-                            Clicked="OnClickEdit"
-                            FontAttributes="Italic"
-                            Text="Edit" />
-                    </HorizontalStackLayout>
-                </FlexLayout>
-                <Grid Padding="0,10,0,10" BackgroundColor="White">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="254" />
-                        <ColumnDefinition Width="100" />
-                        <ColumnDefinition Width="100" />
-                    </Grid.ColumnDefinitions>
-                    <Label
-                        Grid.Column="0"
-                        FontSize="Micro"
                         HorizontalTextAlignment="Center"
-                        Text="Ticket Type" />
-                    <Label
-                        Grid.Column="1"
-                        FontSize="Micro"
-                        HorizontalTextAlignment="Center"
-                        Text="Quantity" />
-                    <Label
-                        Grid.Column="2"
-                        FontSize="Micro"
-                        HorizontalTextAlignment="Center"
-                        Text="Price" />
-                </Grid>
-                <VerticalStackLayout BindableLayout.ItemsSource="{Binding CartItems}">
+                        Text="Before finalizing your purchase, review the order summary. Confirm the items, quantities, and total cost to ensure accuracy."
+                        WidthRequest="400" />
 
-                    <BindableLayout.ItemTemplate>
-                        <DataTemplate x:DataType="model:TicketCartItem">
-                            <Grid Margin="0,0,0,10" BackgroundColor="White">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="254" />
-                                    <ColumnDefinition Width="100" />
-                                    <ColumnDefinition Width="100" />
-                                </Grid.ColumnDefinitions>
-                                <Label
-                                    Grid.Column="0"
-                                    Style="{StaticResource lblRegular}"
-                                    Text="{Binding EventClass.ClassName}" />
-                                <Label
-                                    Grid.Column="1"
-                                    HorizontalTextAlignment="Center"
-                                    Style="{StaticResource lblRegular}"
-                                    Text="{Binding Quantity}" />
-                                <Label
-                                    Grid.Column="2"
-                                    HorizontalTextAlignment="End"
-                                    Style="{StaticResource lblRegular}"
-                                    Text="{Binding TotalPrice, StringFormat='$ {0:F2}'}" />
-                            </Grid>
-                        </DataTemplate>
-                    </BindableLayout.ItemTemplate>
                 </VerticalStackLayout>
-                <FlexLayout JustifyContent="SpaceBetween">
-                    <Label Text="Subtotal" />
-                    <Label x:Name="lblSubtotal" Text="$0.00" />
-                </FlexLayout>
-                <VerticalStackLayout>
-                    <Label Text="Have a promotion code? Enter here:" />
-                    <HorizontalStackLayout>
-                        <Entry x:Name="txtPromoCode" WidthRequest="254" />
-                        <Button Text="Apply" />
-                    </HorizontalStackLayout>
-                </VerticalStackLayout>
-                <FlexLayout JustifyContent="SpaceBetween">
-                    <Label FontSize="Large" Text="Total" />
-                    <Label
-                        x:Name="lblTotal"
-                        FontSize="Large"
-                        Text="$0.00" />
-                </FlexLayout>
-            </VerticalStackLayout>
+            </Frame>
         </HorizontalStackLayout>
     </ScrollView>
 </ContentPage>
