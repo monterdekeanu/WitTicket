@@ -109,7 +109,9 @@
         <Button
             x:Name="btnRegister"
             Margin="0,20,0,0"
+            BackgroundColor="#DAA520"
             Clicked="OnClickRegister"
+            CornerRadius="0"
             Text="Register" />
     </VerticalStackLayout>
 </ContentPage>

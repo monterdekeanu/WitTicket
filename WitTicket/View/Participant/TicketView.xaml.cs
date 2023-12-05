@@ -56,11 +56,6 @@ public partial class TicketView : ContentPage
         
         foreach(TicketModel ticket in ActiveTickets)
         {
-            if (ticket == null)
-            {
-                ticketContainer.Children.Clear();
-                break;
-            }
             //if(events.FirstOrDefault(x => x.EventId == ticket.EventId).IsCancelled || events.FirstOrDefault(x => x.EventId == ticket.EventId).EventClasses.FirstOrDefault(x => x.ClassId == ticket.TicketType).IsDeleted)
             //{
             //   break;
@@ -117,6 +112,16 @@ public partial class TicketView : ContentPage
             ticketStackLayout.Add(saveTicketBtn);
             
             ticketContainer.Children.Add(ticketFrame);
+        }
+        if (ActiveTickets == null || ActiveTickets.Count <= 0)
+        {
+            Frame emptyFrame = new();
+            emptyFrame.HeightRequest = 120;
+            Label emptyTxt = new Label { Text = "No Tickets Found", FontSize = 24, FontAttributes = FontAttributes.Bold, HorizontalTextAlignment = TextAlignment.Center, VerticalTextAlignment = TextAlignment.Center };
+            VerticalStackLayout emptyHS = new VerticalStackLayout { Children = { emptyTxt } };
+            emptyHS.WidthRequest = 450;
+            emptyFrame.Content = emptyHS;
+            ticketContainer.Children.Add(emptyFrame);
         }
     }
 
