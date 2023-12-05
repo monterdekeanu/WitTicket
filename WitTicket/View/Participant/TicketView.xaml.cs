@@ -9,6 +9,7 @@ using QRCoder;
 using Microsoft.Maui.Controls.Internals;
 using CommunityToolkit.Maui.Alerts;
 using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Maui.Storage;
 
 public partial class TicketView : ContentPage
 {
@@ -30,6 +31,8 @@ public partial class TicketView : ContentPage
 	}
     private async void OnClickDownloadImage(object sender, EventArgs e)
     {
+        CancellationTokenSource source = new CancellationTokenSource();
+        CancellationToken token = source.Token;
         HorizontalStackLayout parent = (HorizontalStackLayout)((Button)sender).Parent;
         ((Button)sender).IsVisible = false;
         var image = await parent.CaptureAsync();
@@ -38,9 +41,14 @@ public partial class TicketView : ContentPage
 
         await image.CopyToAsync(memoryStream);
 
-        File.WriteAllBytes($"C:\\Users\\user\\Desktop\\{ActiveUser.FirstName}_{((Button)sender).AutomationId}.png", memoryStream.ToArray());
+        //File.WriteAllBytes($"C:\\Users\\user\\Desktop\\{ActiveUser.FirstName}_{((Button)sender).AutomationId}.png", memoryStream.ToArray());
+        var fileSaverResult = await FileSaver.Default.SaveAsync($"{ActiveUser.FirstName}_{((Button)sender).AutomationId}.png", memoryStream, token);
+        if (fileSaverResult.IsSuccessful)
+        {
+            await Toast.Make("Ticket Saved", ToastDuration.Short, 14).Show();
+        }
         ((Button)sender).IsVisible = true;
-        await Toast.Make("Ticket Saved",ToastDuration.Short,14).Show();
+        
     }
     private void InitializeTickets()
     {
@@ -53,6 +61,10 @@ public partial class TicketView : ContentPage
                 ticketContainer.Children.Clear();
                 break;
             }
+            //if(events.FirstOrDefault(x => x.EventId == ticket.EventId).IsCancelled || events.FirstOrDefault(x => x.EventId == ticket.EventId).EventClasses.FirstOrDefault(x => x.ClassId == ticket.TicketType).IsDeleted)
+            //{
+            //   break;
+            //}
             Grid gridParentContainer = new();
             Frame ticketFrame = new();
             ticketFrame.Padding = 0;
