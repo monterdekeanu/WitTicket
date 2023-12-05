@@ -73,11 +73,36 @@ public partial class CheckoutView : ContentPage
     }
     private async void OnClickCheckout(object sender, EventArgs e)
     {
+        if(ValidateDetails() == false)
+        {
+            await DisplayAlert("Payment Failed:", "Payment has been declined. Please try a different payment method or bank card. Have a question? Please contact support@witticket.com", "OK");
+            return;
+        }
         await DisplayCardProcessor();
         OnSuccessCheckout();
         await DisplayAlert("Success", "Ticket(s) purchased successfully.", "OK");
         Navigation.RemovePage(this.Navigation.NavigationStack[this.Navigation.NavigationStack.Count - 2]);
         await Navigation.PopAsync();
+    }
+
+    private bool ValidateDetails()
+    {
+        if(txtCardNumber.Text == null || txtCardNumber.Text.Length > 19) {
+            return false;
+        }
+        if (txtCardExpirationDate.Text.Length < 7)
+        {
+            return false;
+        }
+        if( txtCardCVV.Text.Length >= 4)
+        {
+            return false;
+        }
+        if(txtCardZipCode.Text == null || txtCardZipCode.Text.Length < 4)
+        {
+            return false;
+        }
+        return true;
     }
     private async Task DisplayCardProcessor()
     {
